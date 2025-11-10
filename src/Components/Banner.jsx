@@ -70,7 +70,7 @@ const slides = [
   {
     id: 6,
     image: "https://wgl-dsites.net/genesisauto/wp-content/uploads/2024/05/h3-1.webp",
-    title: "Genesis Electrified",
+    title: "Genesis Electrified G80",
     subtitle: "Executive EV with supreme comfort",
     price: "$79,900",
     badge: "Executive",
@@ -142,11 +142,11 @@ const Banner = ({ autoplay = true, interval = 6000 }) => {
             </span>
 
             {/* Title */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none md:leading-tight">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300">
-                {current.title}
-              </span>
-            </h1>
+           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none">
+           <span className="inline-block whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300">
+           {current.title}
+          </span>
+           </h1>
 
             {/* Subtitle */}
             <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl font-light leading-relaxed">
