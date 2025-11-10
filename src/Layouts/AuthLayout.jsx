@@ -2,17 +2,13 @@ import React from 'react';
 
 const AuthLayout = () => {
     return (
-        <div>
-            <header>
-                <h1 className="text-3xl font-bold underline">Car Hub - Auth</h1>
-            </header>
-            <main>
-                {/* Auth-related content goes here */}
-            </main>
-            <footer>
-                <p>&copy; 2023 Car Hub. All rights reserved.</p>
-            </footer>
-        </div>
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white overflow-x-hidden">
+      <Navbar />
+      <main className="flex-1 pt-20">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
     );
 };
 
