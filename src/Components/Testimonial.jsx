@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { FaQuoteLeft, FaStar, FaHeadset, FaCheck, FaShippingFast, FaGlobe, FaUsers } from "react-icons/fa";
+import { FaQuoteLeft, FaStar, FaHeadset, FaCheck, FaShippingFast, FaGlobe, FaUsers, FaPaperPlane, FaTimes } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 
-// Live Counter Hook - Enhanced
+// Live Counter Hook
 const useCounter = (end, duration = 3000) => {
   const [count, setCount] = useState(0);
   const controls = useAnimation();
@@ -46,7 +46,7 @@ const testimonials = [
     name: "Sarah Chen",
     role: "Import Director, EV Elite",
     image: "https://randomuser.me/api/portraits/women/44.jpg",
-    rating: 5,
+    rating: 4,
     text: "The best platform for importing luxury EVs. Transparent pricing, real-time tracking, and zero hassle. Our fleet grew 300% in 6 months.",
     verified: true,
   },
@@ -55,21 +55,94 @@ const testimonials = [
     name: "Michael Ross",
     role: "Fleet Manager, DriveX",
     image: "https://randomuser.me/api/portraits/men/86.jpg",
-    rating: 5,
-    text: "From Japan to Dubai – CARHUB handled 50+ vehicles with perfection. Their inspection reports are gold. Trust earned, business won.",
+    rating: 3,
+    text: "From Japan to Dubai - CARHUB handled 50+ vehicles with perfection. Their inspection reports are gold. Trust earned, business won.",
     verified: true,
   },
 ];
 
+// Custom Chat (Standalone)
+const CustomChat = () => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([
+    { text: "Welcome to CARHUB! How can we help you with EV import/export?", sender: "bot" }
+  ]);
+
+  const sendMessage = () => {
+    if (message.trim()) {
+      setMessages([...messages, { text: message, sender: "user" }]);
+      setMessage("");
+      setTimeout(() => {
+        setMessages(prev => [...prev, { text: "Our team will contact you soon!", sender: "bot" }]);
+      }, 1000);
+    }
+  };
+
+  return (
+    <>
+      {/* Toggle Button */}
+      <button
+        onClick={() => setOpen(!open)}
+        className="fixed bottom-6 right-6 group flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold px-6 py-4 rounded-full shadow-2xl shadow-cyan-500/70 hover:shadow-cyan-500/90 transition-all duration-300 z-50"
+      >
+        <FaHeadset className="text-2xl group-hover:animate-pulse" />
+        <span>Live Support</span>
+        <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
+      </button>
+
+      {/* Chat Box */}
+      {open && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          className="fixed bottom-24 right-6 w-96 h-96 bg-slate-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-cyan-500/30 flex flex-col z-50"
+        >
+          <div className="p-4 border-b border-cyan-500/30 flex justify-between items-center">
+            <h3 className="font-bold text-white">CARHUB Support</h3>
+            <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white">
+              <FaTimes />
+            </button>
+          </div>
+          <div className="flex-1 p-4 overflow-y-auto space-y-3">
+            {messages.map((msg, i) => (
+              <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
+                <div className={`max-w-xs px-4 py-2 rounded-2xl ${msg.sender === "user" ? "bg-cyan-500 text-black" : "bg-white/10 text-gray-300"}`}>
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="p-4 border-t border-cyan-500/30 flex gap-2">
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+              placeholder="Type a message..."
+              className="flex-1 bg-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            />
+            <button onClick={sendMessage} className="bg-cyan-500 text-black p-3 rounded-xl hover:bg-cyan-400 transition">
+              <FaPaperPlane />
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </>
+  );
+};
+
 const Testimonial = () => {
   const [current, setCurrent] = useState(0);
 
-  // Live Counters - All will animate & stop perfectly
+  // Live Counters
   const [liveClients, liveRef, liveControls] = useCounter(842, 4000);
   const [totalExports, exportRef, exportControls] = useCounter(1250, 3500);
   const [countries, countryRef, countryControls] = useCounter(47, 3000);
   const [satisfaction, satRef, satControls] = useCounter(98, 2800);
 
+  // Auto Slide
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % testimonials.length);
@@ -143,7 +216,7 @@ const Testimonial = () => {
                       />
                       {testimonials[current].verified && (
                         <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-green-400 rounded-full border-2 border-black flex items-center justify-center">
-                          <span className="text-white text-xs">Check</span>
+                          <FaCheck className="text-white text-xs" />
                         </div>
                       )}
                     </div>
@@ -173,15 +246,9 @@ const Testimonial = () => {
           </div>
         </div>
 
-        {/* LIVE Animated Counters - ALL LIVE & SMOOTH */}
+        {/* LIVE Animated Counters */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 py-16 border-y border-cyan-500/20">
-          {/* Live Clients */}
-          <motion.div
-            ref={liveRef}
-            initial={{ opacity: 0, y: 50 }}
-            animate={liveControls}
-            className="text-center group"
-          >
+          <motion.div ref={liveRef} initial={{ opacity: 0, y: 50 }} animate={liveControls} className="text-center group">
             <div className="text-5xl sm:text-6xl font-black text-cyan-400 group-hover:text-cyan-300 transition">
               {liveClients}
               <span className="inline-block w-3 h-3 bg-green-400 rounded-full ml-2 animate-pulse"></span>
@@ -190,13 +257,7 @@ const Testimonial = () => {
             <p className="mt-2 text-sm sm:text-base text-gray-400">Live Clients Online</p>
           </motion.div>
 
-          {/* Exports This Month */}
-          <motion.div
-            ref={exportRef}
-            initial={{ opacity: 0, y: 50 }}
-            animate={exportControls}
-            className="text-center group"
-          >
+          <motion.div ref={exportRef} initial={{ opacity: 0, y: 50 }} animate={exportControls} className="text-center group">
             <div className="text-5xl sm:text-6xl font-black text-cyan-400 group-hover:text-cyan-300 transition">
               {totalExports}+
             </div>
@@ -204,13 +265,7 @@ const Testimonial = () => {
             <p className="mt-2 text-sm sm:text-base text-gray-400">Exports This Month</p>
           </motion.div>
 
-          {/* Countries Served */}
-          <motion.div
-            ref={countryRef}
-            initial={{ opacity: 0, y: 50 }}
-            animate={countryControls}
-            className="text-center group"
-          >
+          <motion.div ref={countryRef} initial={{ opacity: 0, y: 50 }} animate={countryControls} className="text-center group">
             <div className="text-5xl sm:text-6xl font-black text-cyan-400 group-hover:text-cyan-300 transition">
               {countries}
             </div>
@@ -218,13 +273,7 @@ const Testimonial = () => {
             <p className="mt-2 text-sm sm:text-base text-gray-400">Countries Served</p>
           </motion.div>
 
-          {/* Client Satisfaction */}
-          <motion.div
-            ref={satRef}
-            initial={{ opacity: 0, y: 50 }}
-            animate={satControls}
-            className="text-center group"
-          >
+          <motion.div ref={satRef} initial={{ opacity: 0, y: 50 }} animate={satControls} className="text-center group">
             <div className="text-5xl sm:text-6xl font-black text-cyan-400 group-hover:text-cyan-300 transition">
               {satisfaction}%
             </div>
@@ -242,27 +291,15 @@ const Testimonial = () => {
         >
           <p className="text-white font-bold text-lg">Excellent!</p>
           <div className="flex gap-1">
-            {[...Array(5)].map((_, i) => (
+            {[...Array(4)].map((_, i) => (
               <FaStar key={i} className="text-yellow-400 text-xl" />
             ))}
           </div>
           <p className="text-gray-400">
-            5.0 Rating out of 5.0 based on <span className="text-cyan-400 font-bold">24,854</span> reviews
+            4.0 Rating out of 5.0 based on <span className="text-cyan-400 font-bold">24,854</span> reviews
           </p>
           <span className="text-green-400 font-bold">Trustpilot</span>
         </motion.div>
-      </div>
-
-      {/* Live Chat Widget */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <button
-          onClick={() => window.Tawk_API?.toggle()}
-          className="group flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold px-6 py-4 rounded-full shadow-2xl shadow-cyan-500/70 hover:shadow-cyan-500/90 transition-all duration-300"
-        >
-          <FaHeadset className="text-2xl group-hover:animate-pulse" />
-          <span>Live Support</span>
-          <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
-        </button>
       </div>
 
       {/* Bottom Neon Line */}

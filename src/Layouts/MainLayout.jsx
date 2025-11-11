@@ -4,14 +4,12 @@ import Navbar from "../Components/Navbar";
 import { AuthContext } from "../Provider/AuthProvider";
 import Footer from "../Components/Footer";
 import Loader from "../Components/Loader";
-
-
+import CustomChat from "../Components/CustomChat";
 
 const MainLayout = () => {
-  const { loading } = useContext(AuthContext) ;
+  const { loading } = useContext(AuthContext);
 
-
-  if( loading ) {
+  if (loading) {
     return <Loader />;
   }
 
@@ -22,6 +20,9 @@ const MainLayout = () => {
         <Outlet />
       </main>
       <Footer />
+
+    
+      <CustomChat />
     </div>
   );
 };
