@@ -50,7 +50,7 @@ const Navbar = ({ newsletterRef }) => {
 
   const navItems = [
     { name: "Home", path: "/", icon: House, show: true },
-    { name: "All Products", path: "/products", icon: Grid3x3, show: true },
+    { name: "All Products", path: "/all-products", icon: Grid3x3, show: true },
     { name: "News Letter", icon: Mail, show: true, onClick: scrollToNewsletter },
     { name: "My Exports", path: "/my-exports", icon: Package, show: !!user },
     { name: "My Imports", path: "/my-imports", icon: Package, show: !!user },

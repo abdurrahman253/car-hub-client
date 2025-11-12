@@ -129,7 +129,7 @@ const LatestProducts = () => {
           className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-xl border border-cyan-500/30 text-cyan-400 font-bold px-8 py-4 rounded-full hover:bg-cyan-500/20 hover:border-cyan-400 transition-all duration-300"
         >
           View All Inventory
-          <span className="animate-pulse">Right Arrow</span>
+       
         </Link>
       </div>
     </section>
