@@ -1,5 +1,7 @@
+// src/Components/Banner.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Zap, Gauge, BatteryCharging, Users, Timer } from "lucide-react";
+import { motion } from "framer-motion";
 
 const slides = [
   {
@@ -103,7 +105,7 @@ const Banner = ({ autoplay = true, interval = 6000 }) => {
     if (!autoplay || slides.length === 0) return;
     timeoutRef.current = setInterval(next, interval);
     return () => clearInterval(timeoutRef.current);
-  }, [autoplay, interval]);
+  }, [autoplay, interval, index]);
 
   return (
     <section className="relative w-full h-screen min-h-[700px] max-h-[1100px] overflow-hidden bg-black">
@@ -132,54 +134,87 @@ const Banner = ({ autoplay = true, interval = 6000 }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
       </div>
 
-      {/* Main Content - FIXED BOTTOM CUTTING */}
+      {/* Main Content */}
       <div className="relative z-10 h-full flex flex-col justify-center px-6 py-20 md:py-24 lg:py-28">
         <div className="container mx-auto max-w-7xl">
-          <div className="max-w-4xl space-y-10 md:space-y-12 animate-fade-in">
+          <div className="max-w-4xl space-y-10 md:space-y-12">
             {/* Badge */}
-            <span className="inline-block px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-400/40 rounded-full text-cyan-300 font-bold text-sm md:text-base tracking-widest backdrop-blur-2xl shadow-lg">
-              ★ {current.badge}
-            </span>
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="inline-block px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-400/40 rounded-full text-cyan-300 font-bold text-sm md:text-base tracking-widest backdrop-blur-2xl shadow-lg"
+            >
+              {current.badge}
+            </motion.span>
 
             {/* Title */}
-           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none">
-           <span className="inline-block whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300">
-           {current.title}
-          </span>
-           </h1>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none"
+            >
+              <span className="inline-block whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300">
+                {current.title}
+              </span>
+            </motion.h1>
 
             {/* Subtitle */}
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl font-light leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl font-light leading-relaxed"
+            >
               {current.subtitle}
-            </p>
+            </motion.p>
 
             {/* Price */}
-            <div className="flex items-center gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="flex items-center gap-6"
+            >
               <div className="text-5xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
                 {current.price}
               </div>
               <span className="text-sm md:text-base text-gray-400 uppercase tracking-wider">Starting Price</span>
-            </div>
+            </motion.div>
 
             {/* Specs Grid */}
-            <div className="grid grid-cols-3 gap-5 md:gap-8 max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="grid grid-cols-3 gap-5 md:gap-8 max-w-3xl"
+            >
               {current.specs.map((spec, i) => {
                 const Icon = spec.icon || Zap;
                 return (
-                  <div
+                  <motion.div
                     key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 + i * 0.1 }}
                     className="group bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-8 text-center hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 hover:-translate-y-3 shadow-xl"
                   >
                     <Icon className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 text-cyan-400 group-hover:scale-110 transition" />
                     <div className="text-2xl md:text-3xl font-black text-white">{spec.label}</div>
                     <div className="text-sm md:text-base text-gray-400 mt-1">{spec.name}</div>
-                  </div>
+                  </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
 
-            {/* CTA Buttons - NOW FULLY VISIBLE */}
-            <div className="flex flex-col sm:flex-row gap-5 pt-8 pb-10">
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="flex flex-col sm:flex-row gap-5 pt-8"
+            >
               <button className="group px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl font-bold text-lg md:text-xl shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/80 transition-all hover:scale-105 flex items-center justify-center gap-3">
                 Explore Now
                 <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition" />
@@ -187,7 +222,7 @@ const Banner = ({ autoplay = true, interval = 6000 }) => {
               <button className="px-10 py-5 bg-white/10 backdrop-blur-2xl border-2 border-white/30 rounded-2xl font-bold text-lg md:text-xl hover:bg-white/20 hover:border-cyan-400/50 transition-all hover:scale-105">
                 Schedule Test Drive
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -228,24 +263,6 @@ const Banner = ({ autoplay = true, interval = 6000 }) => {
           </button>
         </>
       )}
-
-      {/* Smooth Fade-In Animation */}
-      <style jsx>{`
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(40px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in > * {
-          opacity: 0;
-          animation: fade-in 1s ease-out forwards;
-        }
-        .animate-fade-in > *:nth-child(1) { animation-delay: 0.1s; }
-        .animate-fade-in > *:nth-child(2) { animation-delay: 0.2s; }
-        .animate-fade-in > *:nth-child(3) { animation-delay: 0.3s; }
-        .animate-fade-in > *:nth-child(4) { animation-delay: 0.4s; }
-        .animate-fade-in > *:nth-child(5) { animation-delay: 0.5s; }
-        .animate-fade-in > *:nth-child(6) { animation-delay: 0.6s; }
-      `}</style>
     </section>
   );
 };

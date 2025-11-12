@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductCard = () => {
+const AllProducts = () => {
     return (
         <div className="border p-4 rounded-lg shadow-md">
             <h3 className="text-lg font-semibold">Product Title</h3>
@@ -10,4 +10,4 @@ const ProductCard = () => {
     );
 };
 
-export default ProductCard;
+export default AllProducts;

@@ -1,7 +1,9 @@
+// src/pages/Home.jsx
 import React, { useRef } from "react";
 import Banner from "../Components/Banner";
-import Testimonial from "../Components/Testimonial";
+import LatestProducts from "../Components/LatestProducts";
 import WhyChooseUs from "../Components/WhyChooseUs";
+import Testimonial from "../Components/Testimonial";
 import NewsLetter from "../Components/NewsLetter";
 import Navbar from "../Components/Navbar";
 import { motion } from "framer-motion";
@@ -10,8 +12,11 @@ const Home = () => {
   const newsletterRef = useRef(null);
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-black">
+      {/* Navbar */}
       <Navbar newsletterRef={newsletterRef} />
+
+      {/* Hero Banner */}
       <Banner />
 
       {/* Floating Neon Orbs */}
@@ -35,11 +40,12 @@ const Home = () => {
 
       {/* Main Content */}
       <main className="relative z-10">
-        <section className="container mx-auto px-6 py-20 sm:py-24 lg:py-32 text-center">
+        {/* Intro */}
+        <section className="container mx-auto px-6 py-20 text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
+            transition={{ duration: 0.9 }}
             viewport={{ once: true, margin: "-100px" }}
             className="max-w-4xl mx-auto"
           >
@@ -48,16 +54,24 @@ const Home = () => {
             </h2>
             <p className="mt-6 text-lg sm:text-xl text-gray-300 leading-relaxed">
               Import & Export Premium EVs Globally –{" "}
-              <span className="text-cyan-400 font-bold">
-                Seamless, Secure, Swift
-              </span>
+              <span className="text-cyan-400 font-bold">Seamless, Secure, Swift</span>
             </p>
           </motion.div>
         </section>
 
+        {/* Latest Products */}
+        <LatestProducts />
+
+        {/* Why Choose Us */}
         <WhyChooseUs />
+
+        {/* Testimonial */}
         <Testimonial />
-        <NewsLetter ref={newsletterRef} />
+
+        {/* Newsletter */}
+        <div ref={newsletterRef}>
+          <NewsLetter />
+        </div>
       </main>
 
       {/* Bottom Neon Line */}
