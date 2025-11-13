@@ -16,7 +16,8 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [myImports, setMyImports] = useState([]); // NEW: Global imports state
+  const [myImports, setMyImports] = useState([]);
+  const [myExports, setMyExports] = useState([]);
 
   // Create User
   const createUser = (email, password) => {
@@ -105,12 +106,14 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     myImports,
-    setMyImports, // Allow components to update
+    setMyImports, 
     createUser,
     signIn,
     logOut,
     updateUserProfile,
-    fetchMyImports // Optional: manual refresh
+    fetchMyImports, 
+    myExports,
+    setMyExports,
   };
 
   return (
