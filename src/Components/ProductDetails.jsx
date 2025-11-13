@@ -1,9 +1,10 @@
 // src/Pages/ProductDetails.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaStar, FaMapMarkerAlt, FaBoxOpen, FaTachometerAlt, FaCog, FaGasPump, FaCalendarAlt, FaChair, FaDoorClosed, FaCogs, FaPalette, FaUser, FaPhone, FaEnvelope, FaCheckCircle } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const ProductDetails = () => {
   const [importQty, setImportQty] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [importing, setImporting] = useState(false);
+  const { user } = useContext(AuthContext);
 
 
    useEffect(() => {
@@ -19,57 +21,111 @@ const ProductDetails = () => {
        }, []);
 
 
+useEffect(() => {
+  const fetchProduct = async () => {
+    if (!user) {
+      setLoading(false);
+      toast.error("Please login to view product details");
+      return;
+    }
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/products/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setProduct(data.result);
-        } else {
-          toast.error(data.message);
-        }
-        setLoading(false);
-      })
-      .catch(() => {
-        toast.error("Failed to load product");
-        setLoading(false);
-      });
-  }, [id]);
-
-  const handleImport = async () => {
-    if (importQty > product.availableQuantity) return;
-
-    setImporting(true);
     try {
-      const res = await fetch("http://localhost:5000/import-product", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: product._id,
-          importQuantity: Number(importQty),
-          userId: "user123" 
-        })
+      const token = await user.getIdToken(); 
+      const res = await fetch(`http://localhost:5000/products/${id}`, {
+        headers: {
+          authorization: `Bearer ${token}` 
+        }
       });
 
       const data = await res.json();
+
       if (data.success) {
-        toast.success(`Imported ${importQty} unit(s)!`);
-        setProduct(prev => ({
-          ...prev,
-          availableQuantity: prev.availableQuantity - importQty
-        }));
-        setShowModal(false);
-        setImportQty(1);
+        setProduct(data.result);
       } else {
-        toast.error(data.message);
+        toast.error(data.message || "Failed to load product");
       }
     } catch (err) {
-      toast.error("Import failed");
+      console.error("Fetch error:", err);
+      toast.error("Failed to load product");
     } finally {
-      setImporting(false);
+      setLoading(false);
     }
   };
+
+  fetchProduct();
+}, [id, user]); 
+
+
+
+const handleImport = async () => {
+  if (!user) {
+    toast.error("Please login to import");
+    return;
+  }
+
+  if (importQty > product.availableQuantity) {
+    toast.error("Not enough stock available");
+    return;
+  }
+
+  setImporting(true);
+  try {
+    const token = await user.getIdToken();
+    const res = await fetch("http://localhost:5000/import-product", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        productId: product._id,
+        importQuantity: Number(importQty)
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      toast.success(`Imported ${importQty} unit(s)!`);
+
+      // Update Product UI
+      setProduct(prev => ({
+        ...prev,
+        availableQuantity: prev.availableQuantity - importQty
+      }));
+
+      // NEW: Update My Imports in AuthContext (Global State)
+      if (typeof window !== 'undefined') {
+        const event = new CustomEvent('importAdded', {
+          detail: {
+            _id: data.importId,
+            productImage: product.productImage,
+            productName: product.productName,
+            price: product.price,
+            originCountry: product.originCountry,
+            rating: product.rating,
+            importedQuantity: importQty,
+            productId: product._id
+          }
+        });
+        window.dispatchEvent(event);
+      }
+
+      setShowModal(false);
+      setImportQty(1);
+    } else {
+      toast.error(data.message || "Import failed");
+    }
+  } catch (err) {
+    console.error("Import error:", err);
+    toast.error("Import failed");
+  } finally {
+    setImporting(false);
+  }
+};
+
+
+
 
   if (loading) {
    return (

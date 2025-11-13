@@ -8,6 +8,7 @@ import NotFound from "../Pages/NotFound";
 import AllProducts from "../Components/AllProducts";
 import PrivateRoute from "./PrivateRoute";
 import ProductDetails from "../Components/ProductDetails";
+import MyImports from "../Pages/MyImports";
 
 const router = createBrowserRouter([
  {
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
             <PrivateRoute>
               <ProductDetails />
            </PrivateRoute>
+        )
+      },
+        {
+        path: "/my-imports",
+        element: (
+          <PrivateRoute>
+            <MyImports/>
+          </PrivateRoute>
         )
       },
 
