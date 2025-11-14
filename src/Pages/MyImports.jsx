@@ -14,7 +14,7 @@ const MyImports = () => {
       window.scrollTo(0, 0);
     }, []);
 
-  // Fetch imports on mount
+
   useEffect(() => {
     if (user && myImports.length === 0) {
       fetchMyImports();
@@ -117,7 +117,7 @@ const MyImports = () => {
   );
 };
 
-// Reusable Import Card Component
+
 const ImportCard = ({ item, index, onRemove, navigate }) => {
   const {
     _id,

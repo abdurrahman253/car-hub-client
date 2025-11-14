@@ -22,13 +22,13 @@ const AllProducts = () => {
         return res.json();
       })
       .then((response) => {
-        console.log("API Response:", response); // Debug করার জন্য
+        console.log("API Response:", response);
         
-        // Backend থেকে {success: true, data: [...]} আসছে
+       
         if (response.success && Array.isArray(response.data)) {
           setProducts(response.data);
         } else if (Array.isArray(response)) {
-          // যদি সরাসরি array আসে
+        
           setProducts(response);
         } else {
           setProducts([]);
@@ -45,7 +45,7 @@ const AllProducts = () => {
   // Search with debounce
   useEffect(() => {
     if (!searchText.trim()) {
-      // Search empty হলে আবার সব products load করুন
+      
       setLoading(true);
       fetch("https://car-hub-server-rlpm.vercel.app/products")
         .then((res) => res.json())
@@ -87,15 +87,15 @@ const AllProducts = () => {
         <p className="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-2">
           Full Inventory
         </p>
-        <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
+        <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
           All Premium EVs
         </h2>
         <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
-          Global import & export – Japan, Germany, USA, Korea
+          Global import & export - Japan, Germany, USA, Korea
         </p>
       </motion.div>
 
-      {/* Elegant Search Box */}
+      {/* Search Box */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

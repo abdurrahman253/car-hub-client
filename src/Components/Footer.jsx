@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaCar } from 'react-icons/fa';
 import { Mail, Linkedin, Facebook, ChevronUp } from 'lucide-react';
 
-// Official X Logo (2025)
+
 const XLogo = () => (
   <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -22,10 +22,10 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { label: 'All Products', href: '/products' },
-    { label: 'About Us', href: '/about' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'All Products', href: '/all-products' },
+    { label: 'My Exports', href: '/my-exports' },
+    { label: 'My Imports', href: '/my-imports' },
+    { label: 'Add Export', href: '/add-export' },
     { label: 'Terms of Service', href: '/terms' }
   ];
 
@@ -39,10 +39,10 @@ const Footer = () => {
 
   return (
     <>
-      {/* Mobile Floating Back to Top - Super Glass Effect */}
+      {/* Mobile Floating Back to Top */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-8 right-4 z-50 md:hidden group flex items-center justify-center w-16 h-16 rounded-full bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl border border-gray-300/30 dark:border-white/30 shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/90 transition-all duration-500 ring-4 ring-cyan-400/20"
+        className="fixed bottom-4 right-4 z-50 md:hidden group flex items-center justify-center w-16 h-16 rounded-full bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl border border-gray-300/30 dark:border-white/30 shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/90 transition-all duration-500 ring-4 ring-cyan-400/20"
         aria-label="Back to Top"
       >
         <ChevronUp className="w-9 h-9 text-cyan-300 group-hover:-translate-y-2 transition" />
@@ -57,7 +57,7 @@ const Footer = () => {
 
         <div className="relative z-10 container mx-auto px-6 py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
-            {/* Brand Section - SAME AS NAVBAR */}
+            {/* Brand Section  */}
             <div className="space-y-6">
               <Link to="/" className="flex items-center gap-4 group">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-2xl shadow-cyan-500/50 group-hover:scale-110 transition">
@@ -172,7 +172,7 @@ const Footer = () => {
             <p className="text-gray-500 text-xs">
               Made with <span className="text-red-500">❤️</span> for the future of driving
             </p>
-            {/* Desktop Back to Top with ULTRA GLASS EFFECT */}
+            {/* Desktop Back to Top */}
             <button
               onClick={scrollToTop}
               className="group flex items-center gap-3 px-8 py-4 bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl border border-gray-300/30 dark:border-white/30 rounded-full hover:bg-gray-100/20 dark:hover:bg-white/20 hover:border-cyan-400 transition-all duration-500 shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/90 ring-4 ring-cyan-400/20"
@@ -183,7 +183,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* MOBILE COPYRIGHT - STICKY AT VERY BOTTOM */}
+        {/* MOBILE COPYRIGHT */}
         <div className="md:hidden bg-gradient-to-t from-white dark:from-black via-gray-100 dark:via-slate-950 to-transparent border-t border-gray-300/10 dark:border-white/10 backdrop-blur-2xl z-40">
           <div className="container mx-auto px-6 py-4 text-center">
             <p className="text-gray-500 text-xs">

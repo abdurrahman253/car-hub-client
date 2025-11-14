@@ -96,7 +96,7 @@ const ProductDetails = () => {
           availableQuantity: prev.availableQuantity - importQty
         }));
 
-        // NEW: Update My Imports in AuthContext (Global State)
+        
         if (typeof window !== 'undefined') {
           const event = new CustomEvent('importAdded', {
             detail: {

@@ -17,7 +17,7 @@ const LatestProducts = () => {
       .then((response) => {
         console.log("Latest Products Response:", response);
         
-        // ✅ Fix: Handle {success: true, data: [...]} structure
+      
         if (response.success && Array.isArray(response.data)) {
           // Get latest 6 products
           const latest = response.data.slice(0, 6);
@@ -105,7 +105,7 @@ const LatestProducts = () => {
         <p className="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-2">
           Fresh Arrivals
         </p>
-        <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
+        <h2 className="text-3xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
           Latest Premium EVs
         </h2>
         <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">

@@ -24,7 +24,7 @@ const CustomChat = () => {
       {/* Toggle Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 group flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold px-6 py-4 rounded-full shadow-2xl shadow-cyan-500/70 hover:shadow-cyan-500/90 transition-all duration-300 z-[9999]"
+        className="fixed bottom-23 right-4 group flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold px-6 py-4 rounded-full shadow-2xl shadow-cyan-500/70 hover:shadow-cyan-500/90 transition-all duration-300 z-[9999]"
         style={{ pointerEvents: "auto" }}
       >
         <FaHeadset className="text-2xl group-hover:animate-pulse" />
@@ -39,7 +39,8 @@ const CustomChat = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300 }}
-          className="fixed bottom-24 right-6 w-96 h-96 bg-gray-100/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-cyan-500/30 flex flex-col z-[9998]"
+          className="fixed bottom-43 left-1/2 -translate-x-1/2 sm:right-6 sm:translate-x-0
+          w-96 h-96 bg-gray-100/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-cyan-500/30 flex flex-col z-[9998]"
           style={{ pointerEvents: "auto" }}
         >
           <div className="p-4 border-b border-cyan-500/30 flex justify-between items-center">

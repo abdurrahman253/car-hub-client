@@ -42,7 +42,7 @@ const reasons = [
   }
 ];
 
-// Real Brand Logos with Name
+//  Brand Logos with Name
 const brands = [
   { src: "https://boxcar-nextjs.vercel.app/_next/image?url=%2Fimages%2Fresource%2Fbrand-1.png&w=128&q=75", alt: "Toyota", name: "Toyota" },
   { src: "https://boxcar-nextjs.vercel.app/_next/image?url=%2Fimages%2Fresource%2Fbrand-2.png&w=96&q=75", alt: "Nissan", name: "Nissan" },
@@ -73,7 +73,7 @@ const WhyChooseUs = () => {
           <p className="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-2">
             Why Global Leaders Trust Us
           </p>
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-300 to-white">
+          <h2 className="text-3xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-300 to-white">
             Why Choose CARHUB?
           </h2>
           <p className="mt-4 text-gray-400 max-w-2xl mx-auto text-lg">

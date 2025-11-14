@@ -47,18 +47,18 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  // === Fetch My Imports ===
+  // Fetch My Imports 
   const fetchMyImports = async (currentUser) => {
-    if (!currentUser?.email) return; // email check করুন
+    if (!currentUser?.email) return; 
     try {
-      const token = await currentUser.getIdToken(true); // force refresh
+      const token = await currentUser.getIdToken(true); 
       const res = await fetch("https://car-hub-server-rlpm.vercel.app/my-imports", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        credentials: 'include', // এটা add করুন
+        credentials: 'include', 
       });
 
       if (!res.ok) {
@@ -78,18 +78,18 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // === Fetch My Exports ===
+  // Fetch My Exports
   const fetchMyExports = async (currentUser) => {
-    if (!currentUser?.email) return; // email check করুন
+    if (!currentUser?.email) return; 
     try {
-      const token = await currentUser.getIdToken(true); // force refresh
+      const token = await currentUser.getIdToken(true); 
       const res = await fetch("https://car-hub-server-rlpm.vercel.app/my-exports", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        credentials: 'include', // এটা add করুন
+        credentials: 'include', 
       });
 
       if (!res.ok) {
@@ -109,14 +109,13 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // === Observe Auth ===
+  //  Observe Auth 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       setLoading(true);
 
       if (currentUser) {
-        // একটু delay দিন token generate হতে
         await new Promise(resolve => setTimeout(resolve, 500));
         await fetchMyImports(currentUser);
         await fetchMyExports(currentUser);
@@ -130,7 +129,6 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // === Real-time Import Updates ===
   useEffect(() => {
     const handleImportAdded = (e) => {
       const newImport = e.detail;
@@ -165,8 +163,8 @@ const AuthProvider = ({ children }) => {
     signIn,
     logOut,
     updateUserProfile,
-    fetchMyImports, // এটা expose করুন
-    fetchMyExports, // এটা expose করুন
+    fetchMyImports, 
+    fetchMyExports, 
   };
 
   return (

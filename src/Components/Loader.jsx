@@ -35,25 +35,6 @@ const Loader = () => {
           />
         </motion.div>
 
-        {/* Brand Name */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="mt-10 text-3xl sm:text-4xl font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 animate-pulse"
-        >
-          CARHUB
-        </motion.h1>
-
-        {/* Tagline */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          className="mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 tracking-widest uppercase"
-        >
-          Shifting Into the Future ⚡
-        </motion.p>
       </motion.div>
     </div>
   );

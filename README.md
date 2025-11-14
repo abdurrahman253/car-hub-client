@@ -150,9 +150,12 @@ This project is licensed under the MIT License – © 2025
 
 
 <div align="center">
-### ⚡ Car Hub – Where Premium Electric Vehicles Meet Global Opportunities
- ***Made with ❤️ by Abdur Rahman**
+⚡ Car Hub – Where Premium Electric Vehicles Meet Global Opportunities
+
+Made with ❤️ by Abdur Rahman
+
 GitHub: @abdurrahman253
+
 GitHub stars
 GitHub forks
 ⭐ Star this repo if you love it! It motivates me a lot 🚀

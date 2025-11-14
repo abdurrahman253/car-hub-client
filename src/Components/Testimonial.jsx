@@ -30,7 +30,7 @@ const useCounter = (end, duration = 3000) => {
   return [count, ref, controls];
 };
 
-// Testimonial Data (এটা আগে কমেন্ট করা ছিল, এখন ফুল ডাটা দিলাম)
+
 const testimonials = [
   {
     rating: 5,

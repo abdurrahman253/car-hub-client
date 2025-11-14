@@ -132,7 +132,7 @@ const Navbar = ({ newsletterRef }) => {
             <div className="hidden lg:flex items-center gap-4">
               {mainNavItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = item.path && location.pathname === item.path; // FIX: Only check isActive if item.path exists
+                const isActive = item.path && location.pathname === item.path;
                 return (
                   <motion.div
                     key={item.name}
@@ -278,7 +278,7 @@ const Navbar = ({ newsletterRef }) => {
                       exit={{ scale: 0, rotate: 90, opacity: 0 }}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
                     >
-                      <XIcon className="w-8 h-8 text-cyan-400" strokeWidth={3} />
+                      <XIcon className="w-6 h-6 text-cyan-400" strokeWidth={3} />
                     </motion.div>
                   ) : (
                     <motion.div
@@ -288,7 +288,7 @@ const Navbar = ({ newsletterRef }) => {
                       exit={{ scale: 0, rotate: -90, opacity: 0 }}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
                     >
-                      <MenuIcon className="w-8 h-8 text-cyan-400" strokeWidth={3} />
+                      <MenuIcon className="w-6 h-6 text-cyan-400" strokeWidth={3} />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -317,12 +317,24 @@ const Navbar = ({ newsletterRef }) => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 w-full max-w-md bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 z-50 shadow-2xl border-l border-cyan-500/20"
+              className="fixed inset-y-0 right-0 w-full max-w-md bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 z-50 shadow-2xl border-l border-cyan-500/20 overflow-y-auto"
             >
+              {/* Close Button */}
+              <div className="absolute top-4 right-4 z-50">
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setOpen(false)}
+                  className="p-3 rounded-2xl bg-white/10 dark:bg-cyan-900/30 backdrop-blur-xl border border-cyan-500/50 hover:border-cyan-400 shadow-2xl transition-all duration-300"
+                >
+                  <XIcon className="w-6 h-6 text-cyan-400" strokeWidth={3} />
+                </motion.button>
+              </div>
+
               <div className="p-8 pt-24 space-y-6">
+                {/* Navigation Items */}
                 {[...mainNavItems, ...(user ? userMenuItems : [])].map((item, i) => {
                   const Icon = item.icon;
-                  const isActive = item.path && location.pathname === item.path; // FIX: Only check isActive if item.path exists
+                  const isActive = item.path && location.pathname === item.path;
                   return (
                     <motion.div
                       key={item.name}
@@ -347,9 +359,17 @@ const Navbar = ({ newsletterRef }) => {
                   );
                 })}
 
+               
                 <div className="pt-8 mt-8 border-t border-cyan-500/20 space-y-6">
+                  
+          
                   {user && (
-                    <div className="flex flex-col items-center gap-6">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="flex flex-col items-center gap-6"
+                    >
                       <div className="relative">
                         <img
                           src={user.photoURL || "/default-avatar.png"}
@@ -358,48 +378,68 @@ const Navbar = ({ newsletterRef }) => {
                         />
                         <div className="absolute bottom-0 right-0 w-6 h-6 bg-emerald-400 rounded-full border-4 border-white dark:border-slate-900 animate-pulse" />
                       </div>
+                      
+                      {/* User Info */}
+                      <div className="text-center">
+                        <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+                          {user.displayName || "User"}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
+                          {user.email}
+                        </p>
+                      </div>
 
+                      {/* Logout Button */}
                       <motion.button
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={handleLogout}
-                        className="group relative w-full py-6 rounded-2xl font-bold text-lg overflow-hidden transition-all duration-500 flex items-center justify-center gap-3"
+                        className="group relative w-full py-4 rounded-2xl font-bold text-lg overflow-hidden transition-all duration-500 flex items-center justify-center gap-3 border border-rose-500/30 bg-rose-500/10"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-rose-600/20 to-red-700/20 blur-xl scale-0 group-hover:scale-150 transition-transform duration-700" />
                         <div className="relative flex items-center gap-3">
-                          <LogOutIcon className="w-7 h-7 text-rose-400 group-hover:text-rose-300 transition-colors" />
+                          <LogOutIcon className="w-6 h-6 text-rose-400 group-hover:text-rose-300 transition-colors" />
                           <span className="bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text text-transparent">
                             LOGOUT
                           </span>
                         </div>
                       </motion.button>
-                    </div>
+                    </motion.div>
                   )}
 
+                
                   {!user && (
                     <motion.button
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
                       onClick={() => { navigate("/auth/login"); setOpen(false); }}
-                      className="w-full py-6 rounded-2xl font-bold text-lg bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white shadow-2xl flex items-center justify-center gap-3"
+                      className="w-full py-4 rounded-2xl font-bold text-lg bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white shadow-2xl flex items-center justify-center gap-3"
                     >
                       <SparklesIcon className="w-6 h-6" />
                       LOGIN / REGISTER
                     </motion.button>
                   )}
 
-                  <motion.button
-                    whileHover={{ scale: 1.1, rotate: 180 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={handleThemeToggle}
-                    className="mx-auto p-4 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30"
+                  {/* Theme Toggle */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="flex justify-center"
                   >
-                    {theme === "light" ? (
-                      <MoonIcon className="w-6 h-6 text-cyan-400" />
-                    ) : (
-                      <SunIcon className="w-6 h-6 text-yellow-400" />
-                    )}
-                  </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.1, rotate: 180 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={handleThemeToggle}
+                      className="p-4 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 shadow-lg"
+                    >
+                      {theme === "light" ? (
+                        <MoonIcon className="w-6 h-6 text-cyan-400" />
+                      ) : (
+                        <SunIcon className="w-6 h-6 text-yellow-400" />
+                      )}
+                    </motion.button>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>

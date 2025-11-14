@@ -72,7 +72,7 @@ class ErrorBoundary extends React.Component {
               </Link>
             </div>
 
-            {/* Debug Info (Only in Development) */}
+      
             {process.env.NODE_ENV === "development" && this.state.error && (
               <motion.details
                 initial={{ opacity: 0, height: 0 }}
@@ -91,7 +91,7 @@ class ErrorBoundary extends React.Component {
             )}
           </motion.div>
 
-          {/* Bottom Neon Line */}
+        
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-400 to-transparent shadow-[0_0_30px_rgba(239,68,68,0.8)]" />
         </div>
       );

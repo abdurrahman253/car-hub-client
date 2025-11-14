@@ -41,14 +41,14 @@ const NotFound = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-cyan-500/20 to-transparent rounded-full blur-3xl animate-ping"></div>
       </div>
 
-      {/* Main Content - PUSHED DOWN ON MOBILE */}
+      {/* Main Content */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
         className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-5xl pt-24 pb-16 sm:pt-32 md:pt-20"
       >
-        {/* 3D Tilt Car Icon */}
+     
         <motion.div
           whileHover={{ rotateY: 180 }}
           transition={{ duration: 0.8 }}
