@@ -1,5 +1,4 @@
-// src/pages/AddExport.jsx
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from '../Provider/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -64,7 +63,7 @@ const AddExport = () => {
     setLoading(true);
     try {
       const token = await user.getIdToken();
-      const res = await fetch('http://localhost:5000/products', {
+      const res = await fetch('https://car-hub-server-rlpm.vercel.app/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +78,16 @@ const AddExport = () => {
         const addedProduct = { ...newProduct, _id: data.insertedId };
         setMyExports(prev => [...prev, addedProduct]);
 
-        toast.success("Export added successfully!");
+        toast.success("Export added successfully! Welcome to CarHub!", {
+          duration: 4000,
+          position: "top-center",
+          style: {
+            background: "#0e7490",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: '12px',
+          },
+        });
         form.reset();
         navigate('/my-exports');
       } else {
@@ -94,30 +102,30 @@ const AddExport = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-black to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-900 flex items-center justify-center">
         <p className="text-xl text-cyan-400">Login required to add export</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-black to-slate-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-900 py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
-        initial={{ opacity: -0, y: 20 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-4xl mx-auto"
       >
         <div className="text-center mb-10">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-300 to-white">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
             Add <span className="text-primary">Export</span>
           </h1>
-          <p className="mt-3 text-gray-400">List your premium vehicle for global export</p>
+          <p className="mt-3 text-gray-600 dark:text-gray-400">List your premium vehicle for global export</p>
         </div>
 
         <motion.div
           initial={{ scale: 0.95 }}
           animate={{ scale: 1 }}
-          className="bg-gradient-to-br from-slate-900/90 via-black/90 to-slate-900/90 backdrop-blur-xl rounded-3xl p-6 sm:p-8 md:p-10 border border-cyan-500/30 shadow-2xl"
+          className="bg-gradient-to-br from-gray-100/90 dark:from-slate-900/90 via-white/90 dark:via-black/90 to-gray-100/90 dark:to-slate-900/90 backdrop-blur-xl rounded-3xl p-6 sm:p-8 md:p-10 border border-cyan-500/30 shadow-2xl"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Product Name */}
@@ -129,7 +137,7 @@ const AddExport = () => {
                 type="text"
                 name="productName"
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
                 placeholder="e.g., Mercedes-Benz S-Class"
               />
             </div>
@@ -143,7 +151,7 @@ const AddExport = () => {
                 type="url"
                 name="productImage"
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
                 placeholder="https://example.com/car.jpg"
               />
             </div>
@@ -159,7 +167,7 @@ const AddExport = () => {
                   name="price"
                   required
                   min="0"
-                  className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                  className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
                   placeholder="142500"
                 />
               </div>
@@ -171,7 +179,7 @@ const AddExport = () => {
                   type="text"
                   name="originCountry"
                   required
-                  className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                  className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
                   placeholder="Germany"
                 />
               </div>
@@ -190,7 +198,7 @@ const AddExport = () => {
                   min="0"
                   max="5"
                   step="0.1"
-                  className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                  className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
                   placeholder="5.0"
                 />
               </div>
@@ -203,7 +211,7 @@ const AddExport = () => {
                   name="availableQuantity"
                   required
                   min="1"
-                  className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                  className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
                   placeholder="7"
                 />
               </div>
@@ -215,55 +223,55 @@ const AddExport = () => {
                 type="text"
                 name="mileage"
                 placeholder="Mileage (e.g., 18 mpg)"
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
               />
               <input
                 type="text"
                 name="transmission"
                 placeholder="Transmission"
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
               />
               <input
                 type="text"
                 name="fuelType"
                 placeholder="Fuel Type"
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
               />
               <input
                 type="number"
                 name="year"
                 placeholder="Year"
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
               />
               <input
                 type="text"
                 name="performance"
                 placeholder="Performance"
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
               />
               <input
                 type="text"
                 name="color"
                 placeholder="Color"
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
               />
               <input
                 type="number"
                 name="seats"
                 placeholder="Seats"
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
               />
               <input
                 type="number"
                 name="doors"
                 placeholder="Doors"
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
               />
               <input
                 type="text"
                 name="engine"
                 placeholder="Engine"
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition"
               />
             </div>
 
@@ -273,7 +281,7 @@ const AddExport = () => {
               <textarea
                 name="description"
                 rows={4}
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition resize-none"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition resize-none"
                 placeholder="Luxury sedan with advanced MBUX..."
               />
             </div>

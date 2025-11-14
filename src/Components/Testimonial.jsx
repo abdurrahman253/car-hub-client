@@ -30,108 +30,41 @@ const useCounter = (end, duration = 3000) => {
   return [count, ref, controls];
 };
 
-// Testimonial Data
+// Testimonial Data (এটা আগে কমেন্ট করা ছিল, এখন ফুল ডাটা দিলাম)
 const testimonials = [
   {
-    id: 1,
-    name: "Alex Morgan",
-    role: "CEO, AutoLux",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
     rating: 5,
-    text: "CARHUB transformed our global export business. Seamless logistics, premium support, and lightning-fast delivery. Highly recommended!",
+    text: "CARHUB transformed our EV export business. Deals that used to take weeks now close in days. Incredible platform!",
+    name: "Alexander Chen",
+    role: "CEO, Horizon Motors – Dubai",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
     verified: true,
   },
   {
-    id: 2,
-    name: "Sarah Chen",
-    role: "Import Director, EV Elite",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    rating: 4,
-    text: "The best platform for importing luxury EVs. Transparent pricing, real-time tracking, and zero hassle. Our fleet grew 300% in 6 months.",
+    rating: 5,
+    text: "The most professional and secure B2B EV marketplace I've ever used. Their team handled everything from inspection to shipping.",
+    name: "Maria Rodriguez",
+    role: "Procurement Director, ElectraGroup – Spain",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face",
     verified: true,
   },
   {
-    id: 3,
-    name: "Michael Ross",
-    role: "Fleet Manager, DriveX",
-    image: "https://randomuser.me/api/portraits/men/86.jpg",
-    rating: 3,
-    text: "From Japan to Dubai - CARHUB handled 50+ vehicles with perfection. Their inspection reports are gold. Trust earned, business won.",
+    rating: 5,
+    text: "Outstanding service! We exported 47 Tesla Model Ys to Germany in under 20 days. Highly recommend CARHUB.",
+    name: "James Mitchell",
+    role: "Fleet Manager, GreenDrive UK",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+    verified: true,
+  },
+  {
+    rating: 5,
+    text: "Best prices, fastest logistics, and 24/7 support. CARHUB is now our only platform for luxury EV trading.",
+    name: "Aisha Al-Mansoori",
+    role: "Managing Director, EliteAuto – Qatar",
+    image: "https://images.unsplash.com/photo-1580489940920-9caaad8c4c36?w=400&h=400&fit=crop&crop=face",
     verified: true,
   },
 ];
-
-// Custom Chat (Standalone)
-const CustomChat = () => {
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    { text: "Welcome to CARHUB! How can we help you with EV import/export?", sender: "bot" }
-  ]);
-
-  const sendMessage = () => {
-    if (message.trim()) {
-      setMessages([...messages, { text: message, sender: "user" }]);
-      setMessage("");
-      setTimeout(() => {
-        setMessages(prev => [...prev, { text: "Our team will contact you soon!", sender: "bot" }]);
-      }, 1000);
-    }
-  };
-
-  return (
-    <>
-      {/* Toggle Button */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 group flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold px-6 py-4 rounded-full shadow-2xl shadow-cyan-500/70 hover:shadow-cyan-500/90 transition-all duration-300 z-50"
-      >
-        <FaHeadset className="text-2xl group-hover:animate-pulse" />
-        <span>Live Support</span>
-        <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
-      </button>
-
-      {/* Chat Box */}
-      {open && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          className="fixed bottom-24 right-6 w-96 h-96 bg-slate-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-cyan-500/30 flex flex-col z-50"
-        >
-          <div className="p-4 border-b border-cyan-500/30 flex justify-between items-center">
-            <h3 className="font-bold text-white">CARHUB Support</h3>
-            <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white">
-              <FaTimes />
-            </button>
-          </div>
-          <div className="flex-1 p-4 overflow-y-auto space-y-3">
-            {messages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-xs px-4 py-2 rounded-2xl ${msg.sender === "user" ? "bg-cyan-500 text-black" : "bg-white/10 text-gray-300"}`}>
-                  {msg.text}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="p-4 border-t border-cyan-500/30 flex gap-2">
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && sendMessage()}
-              placeholder="Type a message..."
-              className="flex-1 bg-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-            />
-            <button onClick={sendMessage} className="bg-cyan-500 text-black p-3 rounded-xl hover:bg-cyan-400 transition">
-              <FaPaperPlane />
-            </button>
-          </div>
-        </motion.div>
-      )}
-    </>
-  );
-};
 
 const Testimonial = () => {
   const [current, setCurrent] = useState(0);
@@ -151,12 +84,11 @@ const Testimonial = () => {
   }, []);
 
   return (
-    <section className="relative py-20 overflow-hidden bg-gradient-to-b from-slate-950 via-black to-slate-950">
+    <section className="relative py-20 overflow-hidden bg-gradient-to-b from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950">
       {/* Background Glow */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 left-20 w-96 h-96 bg-cyan-600 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-20 w-80 h-80 bg-blue-700 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-cyan-500/15 to-transparent rounded-full blur-3xl animate-ping"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -168,10 +100,10 @@ const Testimonial = () => {
           className="text-center mb-16"
         >
           <p className="text-cyan-400 text-sm tracking-widest font-bold uppercase">Trusted Worldwide</p>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-300 to-white mt-2">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white mt-2">
             Client Success Stories
           </h2>
-          <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
+          <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Join <span className="text-cyan-400 font-bold">500+ global businesses</span> who trust CARHUB
           </p>
         </motion.div>
@@ -195,7 +127,7 @@ const Testimonial = () => {
                 <motion.div
                   animate={{ rotateY: current % 2 === 0 ? -5 : 5 }}
                   transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
-                  className="relative p-8 sm:p-12 backdrop-blur-2xl bg-white/10 border border-cyan-500/30 rounded-3xl shadow-2xl shadow-cyan-500/50"
+                  className="relative p-8 sm:p-12 backdrop-blur-2xl bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-3xl shadow-2xl shadow-cyan-500/50"
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <FaQuoteLeft className="absolute top-8 left-8 text-6xl text-cyan-400/20" />
@@ -204,7 +136,7 @@ const Testimonial = () => {
                       <FaStar key={i} className="text-yellow-400 text-xl drop-shadow-lg" />
                     ))}
                   </div>
-                  <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 text-center leading-relaxed italic mb-8 px-4">
+                  <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 text-center leading-relaxed italic mb-8 px-4">
                     "{testimonials[current].text}"
                   </p>
                   <div className="flex flex-col sm:flex-row items-center gap-6 mt-10">
@@ -221,7 +153,7 @@ const Testimonial = () => {
                       )}
                     </div>
                     <div className="text-center sm:text-left">
-                      <h4 className="text-xl font-bold text-white">{testimonials[current].name}</h4>
+                      <h4 className="text-xl font-bold text-black dark:text-white">{testimonials[current].name}</h4>
                       <p className="text-cyan-400 text-sm">{testimonials[current].role}</p>
                     </div>
                   </div>
@@ -247,14 +179,14 @@ const Testimonial = () => {
         </div>
 
         {/* LIVE Animated Counters */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 py-16 border-y border-cyan-500/20">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-8 py-16 border-y border-cyan-500/20">
           <motion.div ref={liveRef} initial={{ opacity: 0, y: 50 }} animate={liveControls} className="text-center group">
             <div className="text-5xl sm:text-6xl font-black text-cyan-400 group-hover:text-cyan-300 transition">
               {liveClients}
               <span className="inline-block w-3 h-3 bg-green-400 rounded-full ml-2 animate-pulse"></span>
             </div>
             <div className="flex justify-center mt-2 text-3xl text-cyan-400"><FaUsers /></div>
-            <p className="mt-2 text-sm sm:text-base text-gray-400">Live Clients Online</p>
+            <p className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">Live Clients Online</p>
           </motion.div>
 
           <motion.div ref={exportRef} initial={{ opacity: 0, y: 50 }} animate={exportControls} className="text-center group">
@@ -262,7 +194,7 @@ const Testimonial = () => {
               {totalExports}+
             </div>
             <div className="flex justify-center mt-2 text-3xl text-cyan-400"><FaShippingFast /></div>
-            <p className="mt-2 text-sm sm:text-base text-gray-400">Exports This Month</p>
+            <p className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">Exports This Month</p>
           </motion.div>
 
           <motion.div ref={countryRef} initial={{ opacity: 0, y: 50 }} animate={countryControls} className="text-center group">
@@ -270,7 +202,7 @@ const Testimonial = () => {
               {countries}
             </div>
             <div className="flex justify-center mt-2 text-3xl text-cyan-400"><FaGlobe /></div>
-            <p className="mt-2 text-sm sm:text-base text-gray-400">Countries Served</p>
+            <p className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">Countries Served</p>
           </motion.div>
 
           <motion.div ref={satRef} initial={{ opacity: 0, y: 50 }} animate={satControls} className="text-center group">
@@ -278,7 +210,7 @@ const Testimonial = () => {
               {satisfaction}%
             </div>
             <div className="flex justify-center mt-2 text-3xl text-cyan-400"><FaCheck /></div>
-            <p className="mt-2 text-sm sm:text-base text-gray-400">Client Satisfaction</p>
+            <p className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">Client Satisfaction</p>
           </motion.div>
         </div>
 
@@ -289,14 +221,14 @@ const Testimonial = () => {
           transition={{ duration: 1, delay: 0.5 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-20 text-center"
         >
-          <p className="text-white font-bold text-lg">Excellent!</p>
+          <p className="text-black dark:text-white font-bold text-lg">Excellent!</p>
           <div className="flex gap-1">
-            {[...Array(4)].map((_, i) => (
+            {[...Array(5)].map((_, i) => (
               <FaStar key={i} className="text-yellow-400 text-xl" />
             ))}
           </div>
-          <p className="text-gray-400">
-            4.0 Rating out of 5.0 based on <span className="text-cyan-400 font-bold">24,854</span> reviews
+          <p className="text-gray-600 dark:text-gray-400">
+            4.9 Rating out of 5.0 based on <span className="text-cyan-400 font-bold">24,854</span> reviews
           </p>
           <span className="text-green-400 font-bold">Trustpilot</span>
         </motion.div>

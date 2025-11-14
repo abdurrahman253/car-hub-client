@@ -34,7 +34,8 @@ const AuthProvider = ({ children }) => {
   // Logout
   const logOut = () => {
     setLoading(true);
-    setMyImports([]); // Clear imports on logout
+    setMyImports([]);
+    setMyExports([]);
     return signOut(auth);
   };
 
@@ -46,59 +47,110 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  // Observe user state
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      if (currentUser) {
-        // Optional: Fetch imports on login
-        fetchMyImports(currentUser);
+  // === Fetch My Imports ===
+  const fetchMyImports = async (currentUser) => {
+    if (!currentUser?.email) return; // email check করুন
+    try {
+      const token = await currentUser.getIdToken(true); // force refresh
+      const res = await fetch("https://car-hub-server-rlpm.vercel.app/my-imports", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        credentials: 'include', // এটা add করুন
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      if (data.success) {
+        setMyImports(data.result || []);
       } else {
+        console.error("Import fetch failed:", data.message);
         setMyImports([]);
       }
+    } catch (err) {
+      console.error("Failed to fetch imports:", err);
+      setMyImports([]);
+    }
+  };
+
+  // === Fetch My Exports ===
+  const fetchMyExports = async (currentUser) => {
+    if (!currentUser?.email) return; // email check করুন
+    try {
+      const token = await currentUser.getIdToken(true); // force refresh
+      const res = await fetch("https://car-hub-server-rlpm.vercel.app/my-exports", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        credentials: 'include', // এটা add করুন
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      if (data.success) {
+        setMyExports(data.result || []);
+      } else {
+        console.error("Export fetch failed:", data.message);
+        setMyExports([]);
+      }
+    } catch (err) {
+      console.error("Failed to fetch exports:", err);
+      setMyExports([]);
+    }
+  };
+
+  // === Observe Auth ===
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
+      setLoading(true);
+
+      if (currentUser) {
+        // একটু delay দিন token generate হতে
+        await new Promise(resolve => setTimeout(resolve, 500));
+        await fetchMyImports(currentUser);
+        await fetchMyExports(currentUser);
+      } else {
+        setMyImports([]);
+        setMyExports([]);
+      }
+      
       setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
-  // Fetch imports from backend
-  const fetchMyImports = async (currentUser) => {
-    try {
-      const token = await currentUser.getIdToken();
-      const res = await fetch("http://localhost:5000/my-imports", {
-        headers: { authorization: `Bearer ${token}` }
-      });
-      const data = await res.json();
-      if (data.success) {
-        setMyImports(data.result);
-      }
-    } catch (err) {
-      console.error("Failed to fetch imports:", err);
-    }
-  };
-
-  // Listen for real-time import updates
+  // === Real-time Import Updates ===
   useEffect(() => {
     const handleImportAdded = (e) => {
       const newImport = e.detail;
-      setMyImports(prev => {
-        // Avoid duplicates
-        if (prev.some(i => i._id === newImport._id)) return prev;
+      setMyImports((prev) => {
+        if (prev.some((i) => i._id === newImport._id)) return prev;
         return [...prev, newImport];
       });
     };
 
     const handleImportRemoved = (e) => {
       const removedId = e.detail;
-      setMyImports(prev => prev.filter(i => i._id !== removedId));
+      setMyImports((prev) => prev.filter((i) => i._id !== removedId));
     };
 
-    window.addEventListener('importAdded', handleImportAdded);
-    window.addEventListener('importRemoved', handleImportRemoved);
+    window.addEventListener("importAdded", handleImportAdded);
+    window.addEventListener("importRemoved", handleImportRemoved);
 
     return () => {
-      window.removeEventListener('importAdded', handleImportAdded);
-      window.removeEventListener('importRemoved', handleImportRemoved);
+      window.removeEventListener("importAdded", handleImportAdded);
+      window.removeEventListener("importRemoved", handleImportRemoved);
     };
   }, []);
 
@@ -106,14 +158,15 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     myImports,
-    setMyImports, 
+    setMyImports,
+    myExports,
+    setMyExports,
     createUser,
     signIn,
     logOut,
     updateUserProfile,
-    fetchMyImports, 
-    myExports,
-    setMyExports,
+    fetchMyImports, // এটা expose করুন
+    fetchMyExports, // এটা expose করুন
   };
 
   return (

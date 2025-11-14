@@ -1,4 +1,3 @@
-// src/Components/AllProducts.jsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -11,23 +10,33 @@ const AllProducts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+    window.scrollTo(0, 0);
+  }, []);
 
   // Fetch all products
   useEffect(() => {
-    fetch("http://localhost:5000/products") // বা /all-products
+    fetch("https://car-hub-server-rlpm.vercel.app/products")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to load products");
         return res.json();
       })
-      .then((data) => {
-        setProducts(Array.isArray(data) ? data : data.result || []);
+      .then((response) => {
+        console.log("API Response:", response); // Debug করার জন্য
+        
+        // Backend থেকে {success: true, data: [...]} আসছে
+        if (response.success && Array.isArray(response.data)) {
+          setProducts(response.data);
+        } else if (Array.isArray(response)) {
+          // যদি সরাসরি array আসে
+          setProducts(response);
+        } else {
+          setProducts([]);
+        }
         setLoading(false);
       })
       .catch((err) => {
+        console.error("Fetch error:", err);
         setError(err.message);
         setLoading(false);
       });
@@ -35,17 +44,31 @@ const AllProducts = () => {
 
   // Search with debounce
   useEffect(() => {
-    if (!searchText.trim()) return;
+    if (!searchText.trim()) {
+      // Search empty হলে আবার সব products load করুন
+      setLoading(true);
+      fetch("https://car-hub-server-rlpm.vercel.app/products")
+        .then((res) => res.json())
+        .then((response) => {
+          setProducts(response.success ? response.data : response);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+      return;
+    }
 
     const timer = setTimeout(() => {
       setLoading(true);
-      fetch(`http://localhost:5000/search?search=${encodeURIComponent(searchText)}`)
+      fetch(`https://car-hub-server-rlpm.vercel.app/search?search=${encodeURIComponent(searchText)}`)
         .then((res) => res.json())
         .then((data) => {
           setProducts(Array.isArray(data) ? data : []);
           setLoading(false);
         })
-        .catch(() => setLoading(false));
+        .catch(() => {
+          setLoading(false);
+          setProducts([]);
+        });
     }, 600);
 
     return () => clearTimeout(timer);
@@ -64,10 +87,10 @@ const AllProducts = () => {
         <p className="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-2">
           Full Inventory
         </p>
-        <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-300 to-white">
+        <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
           All Premium EVs
         </h2>
-        <p className="mt-4 text-gray-400 max-w-2xl mx-auto text-lg">
+        <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
           Global import & export – Japan, Germany, USA, Korea
         </p>
       </motion.div>
@@ -86,7 +109,7 @@ const AllProducts = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="Search by model name..."
-            className="w-full pl-14 pr-6 py-5 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-full text-white placeholder-gray-400 text-lg focus:outline-none focus:border-cyan-400/50 focus:bg-white/10 transition-all duration-300 shadow-xl"
+            className="w-full pl-14 pr-6 py-5 bg-gray-100 dark:bg-white/5 backdrop-blur-2xl border border-gray-300 dark:border-white/10 rounded-full text-gray-900 dark:text-white placeholder-gray-400 text-lg focus:outline-none focus:border-cyan-400/50 focus:bg-white/10 transition-all duration-300 shadow-xl"
           />
           {searchText && (
             <button
@@ -103,7 +126,7 @@ const AllProducts = () => {
       {loading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-slate-800/50 backdrop-blur-xl rounded-3xl h-96 animate-pulse" />
+            <div key={i} className="bg-gray-200 dark:bg-slate-800/50 backdrop-blur-xl rounded-3xl h-96 animate-pulse" />
           ))}
         </div>
       )}
@@ -129,11 +152,11 @@ const AllProducts = () => {
           className="text-center py-20"
         >
           <h3 className="text-3xl font-bold text-cyan-400 mb-4">No Products Found</h3>
-          <p className="text-gray-400">Try searching for "Tesla", "Porsche", or "BMW"</p>
+          <p className="text-gray-600 dark:text-gray-400">Try searching for "Tesla", "Porsche", or "BMW"</p>
         </motion.div>
       )}
 
-      {/* Products Grid – Product কম্পোনেন্টে পাঠানো */}
+      {/* Products Grid */}
       {!loading && products.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {products.map((product, index) => (

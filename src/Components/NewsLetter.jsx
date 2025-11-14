@@ -29,7 +29,7 @@ const NewsLetter = forwardRef((_, ref) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-slate-950/70 to-black/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-white/80 dark:from-black/80 via-gray-100/70 dark:via-slate-950/70 to-white/80 dark:to-black/80 backdrop-blur-sm"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 blur-xl"></div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -43,10 +43,10 @@ const NewsLetter = forwardRef((_, ref) => {
           <p className="text-cyan-400 text-sm font-bold tracking-wider uppercase mb-4">
             Exclusive EV Insights
           </p>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-black dark:text-white mb-6">
             Join Our Premium Newsletter
           </h2>
-          <p className="text-gray-400 text-lg mb-12">
+          <p className="text-gray-600 dark:text-gray-400 text-lg mb-12">
             Get first access to rare EV imports, market trends, and exclusive
             deals delivered straight to your inbox.
           </p>
@@ -67,7 +67,7 @@ const NewsLetter = forwardRef((_, ref) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full pl-12 pr-12 py-6 text-lg bg-white/10 backdrop-blur-xl border border-cyan-500/30 rounded-3xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                className="w-full pl-12 pr-12 py-6 text-lg bg-gray-100/10 dark:bg-white/10 backdrop-blur-xl border border-cyan-500/30 rounded-3xl text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
                 required
               />
               <button

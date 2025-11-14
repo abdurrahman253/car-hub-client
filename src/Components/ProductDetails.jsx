@@ -1,4 +1,3 @@
-// src/Pages/ProductDetails.jsx
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -15,121 +14,124 @@ const ProductDetails = () => {
   const [importing, setImporting] = useState(false);
   const { user } = useContext(AuthContext);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-   useEffect(() => {
-         window.scrollTo(0, 0);
-       }, []);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!user) {
+        setLoading(false);
+        toast.error("Please login to view product details");
+        return;
+      }
+
+      try {
+        const token = await user.getIdToken();
+        const res = await fetch(`https://car-hub-server-rlpm.vercel.app/products/${id}`, {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        });
 
 
-useEffect(() => {
-  const fetchProduct = async () => {
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+
+        if (data.success && data.result) {
+          setProduct(data.result);
+        } else {
+          toast.error(data.message || "Failed to load product");
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+        toast.error("Failed to load product");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id, user]);
+
+
+  const handleImport = async () => {
     if (!user) {
-      setLoading(false);
-      toast.error("Please login to view product details");
+      toast.error("Please login to import");
       return;
     }
 
+    if (importQty > product.availableQuantity) {
+      toast.error("Not enough stock available");
+      return;
+    }
+
+    setImporting(true);
     try {
-      const token = await user.getIdToken(); 
-      const res = await fetch(`http://localhost:5000/products/${id}`, {
+      const token = await user.getIdToken();
+      const res = await fetch("https://car-hub-server-rlpm.vercel.app/import-product", {
+        method: "POST",
         headers: {
-          authorization: `Bearer ${token}` 
-        }
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          productId: product._id,
+          importQuantity: Number(importQty)
+        })
       });
 
       const data = await res.json();
 
       if (data.success) {
-        setProduct(data.result);
+        toast.success(`Imported ${importQty} unit(s)!`);
+
+        // Update Product UI
+        setProduct(prev => ({
+          ...prev,
+          availableQuantity: prev.availableQuantity - importQty
+        }));
+
+        // NEW: Update My Imports in AuthContext (Global State)
+        if (typeof window !== 'undefined') {
+          const event = new CustomEvent('importAdded', {
+            detail: {
+              _id: data.importId,
+              productImage: product.productImage,
+              productName: product.productName,
+              price: product.price,
+              originCountry: product.originCountry,
+              rating: product.rating,
+              importedQuantity: importQty,
+              productId: product._id
+            }
+          });
+          window.dispatchEvent(event);
+        }
+
+        setShowModal(false);
+        setImportQty(1);
       } else {
-        toast.error(data.message || "Failed to load product");
+        toast.error(data.message || "Import failed");
       }
     } catch (err) {
-      console.error("Fetch error:", err);
-      toast.error("Failed to load product");
+      console.error("Import error:", err);
+      toast.error("Import failed");
     } finally {
-      setLoading(false);
+      setImporting(false);
     }
   };
-
-  fetchProduct();
-}, [id, user]); 
-
-
-
-const handleImport = async () => {
-  if (!user) {
-    toast.error("Please login to import");
-    return;
-  }
-
-  if (importQty > product.availableQuantity) {
-    toast.error("Not enough stock available");
-    return;
-  }
-
-  setImporting(true);
-  try {
-    const token = await user.getIdToken();
-    const res = await fetch("http://localhost:5000/import-product", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        productId: product._id,
-        importQuantity: Number(importQty)
-      })
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      toast.success(`Imported ${importQty} unit(s)!`);
-
-      // Update Product UI
-      setProduct(prev => ({
-        ...prev,
-        availableQuantity: prev.availableQuantity - importQty
-      }));
-
-      // NEW: Update My Imports in AuthContext (Global State)
-      if (typeof window !== 'undefined') {
-        const event = new CustomEvent('importAdded', {
-          detail: {
-            _id: data.importId,
-            productImage: product.productImage,
-            productName: product.productName,
-            price: product.price,
-            originCountry: product.originCountry,
-            rating: product.rating,
-            importedQuantity: importQty,
-            productId: product._id
-          }
-        });
-        window.dispatchEvent(event);
-      }
-
-      setShowModal(false);
-      setImportQty(1);
-    } else {
-      toast.error(data.message || "Import failed");
-    }
-  } catch (err) {
-    console.error("Import error:", err);
-    toast.error("Import failed");
-  } finally {
-    setImporting(false);
-  }
-};
 
 
 
 
   if (loading) {
    return (
-  <div className="min-h-screen bg-gradient-to-br from-slate-950 via-black to-slate-900 flex items-center justify-center">
+  <div className="min-h-screen bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-900 flex items-center justify-center">
     <div className="relative">
       {/* Outer Ring */}
       <div className="w-16 h-16 border-4 border-cyan-500/30 rounded-full animate-ping"></div>
@@ -146,7 +148,7 @@ const handleImport = async () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-black to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-900 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-red-400 mb-4">Product Not Found</h2>
           <Link to="/inventory" className="text-cyan-400 hover:underline">Back to Inventory</Link>
@@ -162,7 +164,7 @@ const handleImport = async () => {
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen bg-gradient-to-br from-slate-950 via-black to-slate-900 text-white py-12 px-6"
+        className="min-h-screen bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-900 text-black dark:text-white py-12 px-6"
       >
         <div className="max-w-7xl mx-auto">
           {/* Header */}
@@ -174,14 +176,14 @@ const handleImport = async () => {
             <p className="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-2">
               Premium Import • {product.originCountry}
             </p>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-300 to-white">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
               {product.productName}
             </h1>
             <div className="flex items-center justify-center gap-2 mt-4">
               {[...Array(5)].map((_, i) => (
                 <FaStar key={i} className={`text-lg ${i < Math.floor(product.rating) ? "text-yellow-400" : "text-gray-600"}`} />
               ))}
-              <span className="ml-2 text-gray-400">({product.rating})</span>
+              <span className="ml-2 text-gray-600 dark:text-gray-400">({product.rating})</span>
             </div>
           </motion.div>
 
@@ -200,15 +202,15 @@ const handleImport = async () => {
                   alt={product.productName}
                   className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-70" />
-                <div className="absolute bottom-6 left-6 text-white">
+                <div className="absolute inset-0 bg-gradient-to-t from-white/70 dark:from-black/70 via-transparent to-transparent opacity-70" />
+                <div className="absolute bottom-6 left-6 text-black dark:text-white">
                   <p className="text-4xl font-black">${product.price.toLocaleString()}</p>
                   <p className="text-sm text-cyan-300">Ex-Factory Price</p>
                 </div>
               </div>
 
               {/* Quick Specs Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              <div className="grid grid-cols-3 gap-5 md:gap-8 max-w-3xl">
                 {[
                   { icon: <FaTachometerAlt />, label: "Mileage", value: product.mileage },
                   { icon: <FaCog />, label: "Transmission", value: product.transmission },
@@ -219,11 +221,11 @@ const handleImport = async () => {
                   <motion.div
                     key={i}
                     whileHover={{ scale: 1.05 }}
-                    className="bg-white/5 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-4 text-center"
+                    className="bg-gray-100/5 dark:bg-white/5 backdrop-blur-2xl border border-gray-300/10 dark:border-white/10 rounded-3xl p-6 md:p-8 text-center hover:bg-gray-100/10 dark:hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 hover:-translate-y-3 shadow-xl"
                   >
                     <div className="text-cyan-400 text-xl mb-2">{spec.icon}</div>
-                    <p className="text-xs text-gray-400">{spec.label}</p>
-                    <p className="font-bold text-sm">{spec.value}</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">{spec.label}</p>
+                    <p className="font-bold text-sm text-black dark:text-white">{spec.value}</p>
                   </motion.div>
                 ))}
               </div>
@@ -233,10 +235,10 @@ const handleImport = async () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="bg-gradient-to-br from-slate-800/50 to-black/50 backdrop-blur-xl rounded-3xl p-8 border border-cyan-500/20"
+                className="bg-gradient-to-br from-gray-100/50 dark:from-slate-800/50 to-white/50 dark:to-black/50 backdrop-blur-xl rounded-3xl p-8 border border-cyan-500/20"
               >
                 <h3 className="text-2xl font-bold mb-4 text-cyan-300">Vehicle Overview</h3>
-                <p className="text-gray-300 leading-relaxed">{product.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{product.description}</p>
               </motion.div>
             </motion.div>
 
@@ -247,10 +249,10 @@ const handleImport = async () => {
               transition={{ delay: 0.3 }}
               className="lg:col-span-1"
             >
-              <div className="bg-gradient-to-br from-slate-900/90 via-black/90 to-slate-900/90 backdrop-blur-2xl rounded-3xl p-8 border border-cyan-500/30 shadow-2xl sticky top-6">
+              <div className="bg-gradient-to-br from-gray-100/90 dark:from-slate-900/90 via-white/90 dark:via-black/90 to-gray-100/90 dark:to-slate-900/90 backdrop-blur-2xl rounded-3xl p-8 border border-cyan-500/30 shadow-2xl sticky top-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <p className="text-sm text-gray-400">Available Stock</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Available Stock</p>
                     <p className="text-3xl font-black text-emerald-400">{product.availableQuantity}</p>
                   </div>
                   <FaBoxOpen className="text-4xl text-emerald-400" />
@@ -258,20 +260,20 @@ const handleImport = async () => {
 
                 <div className="space-y-4 mb-8">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Color</span>
+                    <span className="text-gray-600 dark:text-gray-400">Color</span>
                     <span className="font-bold flex items-center gap-2">
                       <FaPalette className="text-cyan-400" /> {product.color}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Seats / Doors</span>
+                    <span className="text-gray-600 dark:text-gray-400">Seats / Doors</span>
                     <span className="font-bold flex items-center gap-2">
                       <FaChair className="text-cyan-400" /> {product.seats} / <FaDoorClosed className="text-cyan-400" /> {product.doors}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Engine</span>
-                    <span className="font-bold">{product.engine}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Engine</span>
+                    <span className="font-bold text-black dark:text-white">{product.engine}</span>
                   </div>
                 </div>
 
@@ -298,21 +300,20 @@ const handleImport = async () => {
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-gradient-to-br from-slate-900 via-black to-slate-900 rounded-3xl p-8 max-w-md w-full border border-cyan-500/30 shadow-2xl"
+            className="bg-gradient-to-br from-gray-100 dark:from-slate-900 via-white dark:via-black to-gray-100 dark:to-slate-900 rounded-3xl p-8 max-w-md w-full border border-cyan-500/30 shadow-2xl"
           >
-            <h3 className="text-2xl font-bold text-cyan-300 mb-6 text-center">Import Quantity</h3>
-
+            <h3 className="text-2xl font-bold text-cyan-400 mb-4 text-center">Import Quantity</h3>
             <div className="mb-6">
-              <label className="block text-sm text-gray-400 mb-2">How many units to import?</label>
+              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">How many units to import?</label>
               <input
                 type="number"
                 min="1"
                 max={product.availableQuantity}
                 value={importQty}
                 onChange={(e) => setImportQty(Math.max(1, Math.min(product.availableQuantity, Number(e.target.value))))}
-                className="w-full bg-white/10 border border-cyan-500/30 rounded-xl px-4 py-3 text-white text-xl font-bold text-center focus:outline-none focus:border-cyan-400 transition"
+                className="w-full bg-gray-100/10 dark:bg-white/10 text-black dark:text-white placeholder-gray-500 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
               />
-              <p className="text-xs text-gray-400 mt-2 text-center">
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 text-center">
                 Max: <span className="text-emerald-400 font-bold">{product.availableQuantity}</span> available
               </p>
             </div>
@@ -329,7 +330,7 @@ const handleImport = async () => {
                   setShowModal(false);
                   setImportQty(1);
                 }}
-                className="flex-1 bg-white/10 text-gray-400 font-bold py-3 rounded-xl hover:bg-white/20 transition"
+                className="flex-1 bg-gray-100/10 dark:bg-white/10 text-gray-600 dark:text-gray-400 font-bold py-3 rounded-xl hover:bg-gray-100/20 dark:hover:bg-white/20 transition"
               >
                 Cancel
               </button>

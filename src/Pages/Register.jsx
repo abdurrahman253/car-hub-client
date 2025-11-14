@@ -127,7 +127,7 @@ const Register = () => {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-black to-slate-950 px-4 py-20">
+    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950 px-4 py-20">
       {/* Animated Background Car */}
       <motion.div
         initial={{ x: "-100vw" }}
@@ -151,7 +151,7 @@ const Register = () => {
         transition={{ duration: 0.8 }}
         className="relative z-10 w-full max-w-md"
       >
-        <div className="p-8 sm:p-10 backdrop-blur-2xl bg-white/10 border border-cyan-500/30 rounded-3xl shadow-2xl shadow-cyan-500/50">
+        <div className="p-8 sm:p-10 backdrop-blur-2xl bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-3xl shadow-2xl shadow-cyan-500/50">
           {/* Logo + Title */}
           <div className="flex flex-col items-center mb-8">
             <motion.div
@@ -164,7 +164,7 @@ const Register = () => {
             <h2 className="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
               JOIN CARHUB
             </h2>
-            <p className="mt-2 text-gray-400 tracking-wider text-center">
+            <p className="mt-2 text-gray-600 dark:text-gray-400 tracking-wider text-center">
               Create Your Premium EV Account
             </p>
           </div>
@@ -173,14 +173,14 @@ const Register = () => {
           <form onSubmit={handleRegister} className="space-y-5">
             {/* Name */}
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-300">Full Name</label>
-              <div className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-2xl focus-within:border-cyan-400 focus-within:ring-2 focus-within:ring-cyan-400/30 transition-all">
+              <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-300">Full Name</label>
+              <div className="flex items-center gap-3 p-4 bg-gray-100/5 dark:bg-white/5 border border-gray-300/10 dark:border-white/10 rounded-2xl focus-within:border-cyan-400 focus-within:ring-2 focus-within:ring-cyan-400/30 transition-all">
                 <FaUser className="text-cyan-400 text-xl" />
                 <input
                   type="text"
                   name="name"
                   required
-                  className="w-full bg-transparent text-white placeholder-gray-500 outline-none"
+                  className="w-full bg-transparent text-black dark:text-white placeholder-gray-500 outline-none"
                   placeholder="John Doe"
                 />
               </div>
@@ -188,14 +188,14 @@ const Register = () => {
 
             {/* Email */}
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-300">Email Address</label>
-              <div className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-2xl focus-within:border-cyan-400 focus-within:ring-2 focus-within:ring-cyan-400/30 transition-all">
+              <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-300">Email Address</label>
+              <div className="flex items-center gap-3 p-4 bg-gray-100/5 dark:bg-white/5 border border-gray-300/10 dark:border-white/10 rounded-2xl focus-within:border-cyan-400 focus-within:ring-2 focus-within:ring-cyan-400/30 transition-all">
                 <FaEnvelope className="text-cyan-400 text-xl" />
                 <input
                   type="email"
                   name="email"
                   required
-                  className="w-full bg-transparent text-white placeholder-gray-500 outline-none"
+                  className="w-full bg-transparent text-black dark:text-white placeholder-gray-500 outline-none"
                   placeholder="your@email.com"
                 />
               </div>
@@ -203,14 +203,14 @@ const Register = () => {
 
             {/* Photo URL */}
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-300">Photo URL</label>
-              <div className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-2xl focus-within:border-cyan-400 focus-within:ring-2 focus-within:ring-cyan-400/30 transition-all">
+              <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-300">Photo URL</label>
+              <div className="flex items-center gap-3 p-4 bg-gray-100/5 dark:bg-white/5 border border-gray-300/10 dark:border-white/10 rounded-2xl focus-within:border-cyan-400 focus-within:ring-2 focus-within:ring-cyan-400/30 transition-all">
                 <FaImage className="text-cyan-400 text-xl" />
                 <input
                   type="url"
                   name="photoURL"
                   required
-                  className="w-full bg-transparent text-white placeholder-gray-500 outline-none"
+                  className="w-full bg-transparent text-black dark:text-white placeholder-gray-500 outline-none"
                   placeholder="https://example.com/photo.jpg"
                 />
               </div>
@@ -218,14 +218,14 @@ const Register = () => {
 
             {/* Password */}
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-300">Password</label>
-              <div className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-2xl focus-within:border-cyan-400 focus-within:ring-2 focus-within:ring-cyan-400/30 transition-all">
+              <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-300">Password</label>
+              <div className="flex items-center gap-3 p-4 bg-gray-100/5 dark:bg-white/5 border border-gray-300/10 dark:border-white/10 rounded-2xl focus-within:border-cyan-400 focus-within:ring-2 focus-within:ring-cyan-400/30 transition-all">
                 <FaLock className="text-cyan-400 text-xl" />
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
                   required
-                  className="w-full bg-transparent text-white placeholder-gray-500 outline-none"
+                  className="w-full bg-transparent text-black dark:text-white placeholder-gray-500 outline-none"
                   placeholder="••••••••"
                 />
                 <button
@@ -293,7 +293,7 @@ const Register = () => {
           <button
             onClick={handleGoogleRegister}
             disabled={isGoogleLoading}
-            className="w-full py-5 font-bold text-white bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl hover:bg-white/20 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/60 transition-all duration-300 flex items-center justify-center gap-4"
+            className="w-full py-5 font-bold text-black dark:text-white bg-gray-100/10 dark:bg-white/10 backdrop-blur-xl border border-gray-300/20 dark:border-white/20 rounded-2xl hover:bg-gray-100/20 dark:hover:bg-white/20 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/60 transition-all duration-300 flex items-center justify-center gap-4"
           >
             {isGoogleLoading ? (
               <FaSpinner className="animate-spin text-2xl" />
@@ -306,7 +306,7 @@ const Register = () => {
           </button>
 
           {/* Login Link */}
-          <p className="mt-8 text-center text-gray-400">
+          <p className="mt-8 text-center text-gray-600 dark:text-gray-400">
             Already have an account?{" "}
             <Link to="/auth/login" className="font-bold text-cyan-400 hover:text-cyan-300 transition">
               Login Here

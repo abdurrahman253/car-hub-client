@@ -1,4 +1,3 @@
-// src/Components/ErrorBoundary.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import { FaExclamationTriangle, FaHome, FaRedo } from "react-icons/fa";
@@ -23,7 +22,7 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-black to-slate-950 flex items-center justify-center px-6 relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950 flex items-center justify-center px-6 relative overflow-hidden">
           {/* Background Glow */}
           <div className="absolute inset-0 opacity-30">
             <div className="absolute top-20 left-20 w-96 h-96 bg-red-600/30 rounded-full blur-3xl animate-pulse"></div>
@@ -50,7 +49,7 @@ class ErrorBoundary extends React.Component {
               Oops! Something Went Wrong
             </h1>
 
-            <p className="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
               We encountered an unexpected error while loading this page. Our team has been notified.
             </p>
 
@@ -66,7 +65,7 @@ class ErrorBoundary extends React.Component {
 
               <Link
                 to="/"
-                className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-xl border border-red-500/30 text-red-400 font-bold px-8 py-4 rounded-full hover:bg-red-500/20 hover:border-red-400 transition-all duration-300"
+                className="group inline-flex items-center gap-3 bg-gray-100/10 dark:bg-white/10 backdrop-blur-xl border border-red-500/30 text-red-400 font-bold px-8 py-4 rounded-full hover:bg-red-500/20 hover:border-red-400 transition-all duration-300"
               >
                 <FaHome />
                 Back to Home
@@ -78,7 +77,7 @@ class ErrorBoundary extends React.Component {
               <motion.details
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                className="mt-12 p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-red-500/20 text-left text-xs text-gray-400"
+                className="mt-12 p-6 bg-gray-100/5 dark:bg-white/5 backdrop-blur-xl rounded-2xl border border-red-500/20 text-left text-xs text-gray-600 dark:text-gray-400"
               >
                 <summary className="cursor-pointer font-bold text-red-400 mb-2">
                   Technical Details (Dev Only)

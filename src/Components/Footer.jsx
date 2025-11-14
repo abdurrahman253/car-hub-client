@@ -42,13 +42,13 @@ const Footer = () => {
       {/* Mobile Floating Back to Top - Super Glass Effect */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-8 right-4 z-50 md:hidden group flex items-center justify-center w-16 h-16 rounded-full bg-white/10 backdrop-blur-3xl border border-white/30 shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/90 hover:scale-110 transition-all duration-500 ring-4 ring-cyan-400/20"
+        className="fixed bottom-8 right-4 z-50 md:hidden group flex items-center justify-center w-16 h-16 rounded-full bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl border border-gray-300/30 dark:border-white/30 shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/90 transition-all duration-500 ring-4 ring-cyan-400/20"
         aria-label="Back to Top"
       >
         <ChevronUp className="w-9 h-9 text-cyan-300 group-hover:-translate-y-2 transition" />
       </button>
 
-      <footer className="relative bg-gradient-to-b from-slate-950 via-black to-slate-950 border-t border-cyan-900/30 overflow-hidden">
+      <footer className="relative bg-gradient-to-b from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950 border-t border-cyan-900/30 overflow-hidden">
         {/* Background Glow */}
         <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className="absolute top-20 left-1/4 w-96 h-96 bg-cyan-600 rounded-full blur-3xl animate-pulse"></div>
@@ -64,13 +64,13 @@ const Footer = () => {
                   <FaCar className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                  <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white to-gray-600 dark:to-gray-400">
                     CARHUB
                   </h1>
                   <p className="text-xs text-cyan-400 tracking-widest">PREMIUM EV MARKETPLACE</p>
                 </div>
               </Link>
-              <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-xs">
                 Global leader in luxury electric & hybrid vehicle import/export. Experience the future of automotive excellence.
               </p>
               <div className="flex items-center gap-4 text-gray-500 text-xs">
@@ -81,7 +81,7 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h4 className="text-xl font-bold text-white mb-6 relative inline-block">
+              <h4 className="text-xl font-bold text-black dark:text-white mb-6 relative inline-block">
                 Quick Links
                 <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full"></span>
               </h4>
@@ -90,7 +90,7 @@ const Footer = () => {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-gray-400 hover:text-cyan-300 transition-all duration-300 flex items-center gap-2 group text-sm"
+                      className="text-gray-600 dark:text-gray-400 hover:text-cyan-300 transition-all duration-300 flex items-center gap-2 group text-sm"
                     >
                       <span className="w-1.5 h-1.5 bg-cyan-500/50 rounded-full group-hover:bg-cyan-400 transition"></span>
                       {link.label}
@@ -102,7 +102,7 @@ const Footer = () => {
 
             {/* Services */}
             <div>
-              <h4 className="text-xl font-bold text-white mb-6 relative inline-block">
+              <h4 className="text-xl font-bold text-black dark:text-white mb-6 relative inline-block">
                 Our Services
                 <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full"></span>
               </h4>
@@ -110,7 +110,7 @@ const Footer = () => {
                 {services.map((service) => (
                   <li key={service} className="flex items-start gap-3 group">
                     <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full mt-1.5 group-hover:scale-150 transition-transform"></div>
-                    <span className="text-gray-400 group-hover:text-gray-200 transition text-sm">{service}</span>
+                    <span className="text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition text-sm">{service}</span>
                   </li>
                 ))}
               </ul>
@@ -119,7 +119,7 @@ const Footer = () => {
             {/* Connect & Newsletter */}
             <div className="space-y-8">
               <div>
-                <h4 className="text-xl font-bold text-white mb-6 relative inline-block">
+                <h4 className="text-xl font-bold text-black dark:text-white mb-6 relative inline-block">
                   Stay Connected
                   <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full"></span>
                 </h4>
@@ -132,9 +132,9 @@ const Footer = () => {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 flex items-center justify-center hover:bg-cyan-500/20 hover:border-cyan-400 hover:scale-110 transition-all duration-500 shadow-xl hover:shadow-cyan-500/50 group"
+                        className="w-12 h-12 rounded-2xl bg-gray-100/5 dark:bg-white/5 backdrop-blur-2xl border border-gray-300/10 dark:border-white/10 flex items-center justify-center hover:bg-cyan-500/20 hover:border-cyan-400 hover:scale-110 transition-all duration-500 shadow-xl hover:shadow-cyan-500/50 group"
                       >
-                        <Icon className="text-gray-400 group-hover:text-cyan-300 transition" />
+                        <Icon className="text-gray-600 dark:text-gray-400 group-hover:text-cyan-300 transition" />
                       </a>
                     );
                   })}
@@ -143,9 +143,9 @@ const Footer = () => {
 
               {/* Newsletter */}
               <div className="w-full">
-                <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 shadow-2xl">
-                  <h5 className="text-white font-bold mb-2 text-lg">Exclusive Deals</h5>
-                  <p className="text-gray-400 text-xs mb-5 leading-relaxed">
+                <div className="bg-gray-100/5 dark:bg-white/5 backdrop-blur-2xl border border-gray-300/10 dark:border-white/10 rounded-2xl p-6 shadow-2xl">
+                  <h5 className="text-black dark:text-white font-bold mb-2 text-lg">Exclusive Deals</h5>
+                  <p className="text-gray-600 dark:text-gray-400 text-xs mb-5 leading-relaxed">
                     Get first access to new arrivals & premium offers
                   </p>
                   <form className="flex flex-col gap-3">
@@ -153,7 +153,7 @@ const Footer = () => {
                       type="email"
                       placeholder="your@email.com"
                       required
-                      className="w-full px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition text-sm"
+                      className="w-full px-5 py-4 bg-gray-100/10 dark:bg-white/10 border border-gray-300/20 dark:border-white/20 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition text-sm"
                     />
                     <button
                       type="submit"
@@ -168,23 +168,23 @@ const Footer = () => {
           </div>
 
           {/* Desktop Bottom Bar */}
-          <div className="hidden md:flex justify-between items-center mt-16 pt-8 border-t border-white/10">
+          <div className="hidden md:flex justify-between items-center mt-16 pt-8 border-t border-gray-300/10 dark:border-white/10">
             <p className="text-gray-500 text-xs">
               Made with <span className="text-red-500">❤️</span> for the future of driving
             </p>
             {/* Desktop Back to Top with ULTRA GLASS EFFECT */}
             <button
               onClick={scrollToTop}
-              className="group flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-3xl border border-white/30 rounded-full hover:bg-white/20 hover:border-cyan-400 transition-all duration-500 shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/90 ring-4 ring-cyan-400/20"
+              className="group flex items-center gap-3 px-8 py-4 bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl border border-gray-300/30 dark:border-white/30 rounded-full hover:bg-gray-100/20 dark:hover:bg-white/20 hover:border-cyan-400 transition-all duration-500 shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/90 ring-4 ring-cyan-400/20"
             >
-              <span className="text-sm font-medium text-gray-300 group-hover:text-cyan-300">Back to Top</span>
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-cyan-300">Back to Top</span>
               <ChevronUp className="w-6 h-6 text-cyan-400 group-hover:-translate-y-2 transition" />
             </button>
           </div>
         </div>
 
         {/* MOBILE COPYRIGHT - STICKY AT VERY BOTTOM */}
-        <div className="md:hidden bg-gradient-to-t from-black via-slate-950 to-transparent border-t border-white/10 backdrop-blur-2xl z-40">
+        <div className="md:hidden bg-gradient-to-t from-white dark:from-black via-gray-100 dark:via-slate-950 to-transparent border-t border-gray-300/10 dark:border-white/10 backdrop-blur-2xl z-40">
           <div className="container mx-auto px-6 py-4 text-center">
             <p className="text-gray-500 text-xs">
               Made with <span className="text-red-500">❤️</span> for the future of driving

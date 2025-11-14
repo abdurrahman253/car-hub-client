@@ -10,7 +10,7 @@ const NotFound = () => {
   const handleGoBack = () => navigate(-1);
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-black to-slate-950 px-4">
+    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950 px-4">
       {/* Animated Particle Background */}
       <div className="absolute inset-0">
         {[...Array(20)].map((_, i) => (
@@ -57,7 +57,7 @@ const NotFound = () => {
         >
           <div className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 rounded-3xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-2xl shadow-cyan-500/70 group">
             <FaCar className="text-7xl sm:text-9xl md:text-[10rem] text-white drop-shadow-2xl group-hover:drop-shadow-[0_0_50px_rgba(34,211,238,0.9)] transition-all duration-500" />
-            <div className="absolute inset-0 rounded-3xl bg-white/10 backdrop-blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 rounded-3xl bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
         </motion.div>
 
@@ -76,7 +76,7 @@ const NotFound = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-4 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-300"
+          className="mt-4 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-600 dark:text-gray-300"
         >
           ROUTE NOT FOUND
         </motion.p>
@@ -86,7 +86,7 @@ const NotFound = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="max-w-2xl mx-auto mt-6 text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed px-4"
+          className="max-w-2xl mx-auto mt-6 text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed px-4"
         >
           Looks like this road leads to nowhere. <br className="sm:hidden" />
           <span className="text-cyan-400 font-bold">
@@ -104,7 +104,7 @@ const NotFound = () => {
         >
           <button
             onClick={handleGoBack}
-            className="group flex items-center justify-center gap-3 w-full px-10 py-5 bg-white/10 backdrop-blur-3xl border border-white/20 rounded-2xl font-bold text-lg shadow-2xl hover:bg-white/20 hover:border-cyan-400/50 hover:shadow-cyan-500/60 transition-all duration-500 hover:scale-105"
+            className="group flex items-center justify-center gap-3 w-full px-10 py-5 bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl border border-gray-300/20 dark:border-white/20 rounded-2xl font-bold text-lg shadow-2xl hover:bg-gray-100/20 dark:hover:bg-white/20 hover:border-cyan-400/50 hover:shadow-cyan-500/60 transition-all duration-500 hover:scale-105"
           >
             <FaArrowLeft className="text-cyan-400 group-hover:-translate-x-1 transition" />
             Go Back

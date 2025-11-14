@@ -1,4 +1,3 @@
-// src/pages/MyImports.jsx
 import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +9,11 @@ const MyImports = () => {
   const { user, myImports, setMyImports } = useContext(AuthContext);
   const navigate = useNavigate();
 
+
+   useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
   // Fetch imports on mount
   useEffect(() => {
     if (user && myImports.length === 0) {
@@ -20,7 +24,7 @@ const MyImports = () => {
   const fetchMyImports = async () => {
     try {
       const token = await user.getIdToken();
-      const res = await fetch('http://localhost:5000/my-imports', {
+      const res = await fetch('https://car-hub-server-rlpm.vercel.app/my-imports', {
         headers: { authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -37,7 +41,7 @@ const MyImports = () => {
 
   try {
     const token = await user.getIdToken();
-    const res = await fetch(`http://localhost:5000/my-imports/product/${productId}`, {
+    const res = await fetch(`https://car-hub-server-rlpm.vercel.app/my-imports/product/${productId}`, {
       method: 'DELETE',
       headers: { authorization: `Bearer ${token}` }
     });
@@ -66,7 +70,7 @@ const MyImports = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-black to-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-900">
         <p className="text-xl text-cyan-400">Please login to view your imports</p>
       </div>
     );
@@ -77,7 +81,7 @@ const MyImports = () => {
       <motion.h2
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-4xl sm:text-5xl md:text-6xl font-black text-center mb-10 sm:mb-12 md:mb-16 bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-300 to-white"
+        className="text-4xl sm:text-5xl md:text-6xl font-black text-center mb-10 sm:mb-12 md:mb-16 bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white"
       >
         My <span className="text-primary">Imports</span>
       </motion.h2>
@@ -88,7 +92,7 @@ const MyImports = () => {
           animate={{ opacity: 1 }}
           className="text-center py-20"
         >
-          <p className="text-2xl text-gray-400 mb-6">You haven't imported any vehicles yet.</p>
+          <p className="text-2xl text-gray-600 dark:text-gray-400 mb-6">You haven't imported any vehicles yet.</p>
           <button
             onClick={() => navigate('/inventory')}
             className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold rounded-xl hover:shadow-lg hover:shadow-cyan-500/50 transform hover:scale-105 transition"
@@ -132,14 +136,14 @@ const ImportCard = ({ item, index, onRemove, navigate }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ y: -12, scale: 1.02 }}
-      className="group relative bg-gradient-to-br from-slate-900/80 via-black/90 to-slate-900/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-cyan-500/20 shadow-2xl hover:shadow-cyan-500/40 transition-all duration-500"
+      className="group relative bg-gradient-to-br from-gray-100/80 dark:from-slate-900/80 via-white/90 dark:via-black/90 to-gray-100/80 dark:to-slate-900/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-cyan-500/20 shadow-2xl hover:shadow-cyan-500/40 transition-all duration-500"
     >
       {/* Image */}
       <div
         className="relative overflow-hidden cursor-pointer"
         onClick={() => navigate(`/product-Details/${productId}`)}
       >
-        <div className="aspect-[4/3] relative bg-gray-900">
+        <div className="aspect-[4/3] relative bg-gray-200 dark:bg-gray-900">
           <img
             src={productImage}
             alt={productName}
@@ -149,7 +153,7 @@ const ImportCard = ({ item, index, onRemove, navigate }) => {
               e.target.src = "https://via.placeholder.com/600x400/1a1a1a/cccccc?text=Image+Not+Found";
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/80 dark:from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80" />
 
           {/* Country Badge */}
           <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
@@ -167,7 +171,7 @@ const ImportCard = ({ item, index, onRemove, navigate }) => {
 
       {/* Content */}
       <div className="p-6 space-y-4">
-        <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-2 min-h-[3.5rem] flex items-center">
+        <h3 className="text-xl font-bold text-black dark:text-white group-hover:text-cyan-300 transition-colors line-clamp-2 min-h-[3.5rem] flex items-center">
           {productName}
         </h3>
 
@@ -182,7 +186,7 @@ const ImportCard = ({ item, index, onRemove, navigate }) => {
                 className={`text-sm ${i < Math.floor(rating) ? "text-yellow-400" : "text-gray-600"}`}
               />
             ))}
-            <span className="ml-1 text-xs text-gray-400">({rating})</span>
+            <span className="ml-1 text-xs text-gray-600 dark:text-gray-400">({rating})</span>
           </div>
         </div>
 

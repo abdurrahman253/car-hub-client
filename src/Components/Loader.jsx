@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Loader = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-slate-950 via-black to-slate-950 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950 z-50">
       {/* Glow Orbs */}
       <div className="absolute inset-0 opacity-50">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-cyan-600/30 rounded-full blur-3xl animate-pulse"></div>
@@ -50,7 +50,7 @@ const Loader = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.8 }}
-          className="mt-2 text-xs sm:text-sm text-gray-400 tracking-widest uppercase"
+          className="mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 tracking-widest uppercase"
         >
           Shifting Into the Future ⚡
         </motion.p>

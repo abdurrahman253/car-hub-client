@@ -39,11 +39,11 @@ const CustomChat = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300 }}
-          className="fixed bottom-24 right-6 w-96 h-96 bg-slate-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-cyan-500/30 flex flex-col z-[9998]"
+          className="fixed bottom-24 right-6 w-96 h-96 bg-gray-100/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-cyan-500/30 flex flex-col z-[9998]"
           style={{ pointerEvents: "auto" }}
         >
           <div className="p-4 border-b border-cyan-500/30 flex justify-between items-center">
-            <h3 className="font-bold text-white">CARHUB Support</h3>
+            <h3 className="font-bold text-black dark:text-white">CARHUB Support</h3>
             <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white p-1">
               <FaTimes />
             </button>
@@ -51,7 +51,7 @@ const CustomChat = () => {
           <div className="flex-1 p-4 overflow-y-auto space-y-3">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-xs px-4 py-2 rounded-2xl text-sm ${msg.sender === "user" ? "bg-cyan-500 text-black" : "bg-white/10 text-gray-300"}`}>
+                <div className={`max-w-xs px-4 py-2 rounded-2xl text-sm ${msg.sender === "user" ? "bg-cyan-500 text-black" : "bg-gray-200/10 dark:bg-white/10 text-gray-600 dark:text-gray-300"}`}>
                   {msg.text}
                 </div>
               </div>
@@ -64,7 +64,7 @@ const CustomChat = () => {
               onChange={(e) => setMessage(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && sendMessage()}
               placeholder="Type a message..."
-              className="flex-1 bg-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="flex-1 bg-gray-200/10 dark:bg-white/10 text-black dark:text-white placeholder-gray-500 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
             />
             <button onClick={sendMessage} className="bg-cyan-500 text-black p-3 rounded-xl hover:bg-cyan-400 transition">
               <FaPaperPlane />

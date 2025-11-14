@@ -11,6 +11,12 @@ const MyExports = () => {
   const [updateModal, setUpdateModal] = useState(null);
   const navigate = useNavigate();
 
+
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
+
   useEffect(() => {
     if (user && myExports.length === 0) {
       fetchMyExports();
@@ -22,7 +28,7 @@ const MyExports = () => {
   const fetchMyExports = async () => {
     try {
       const token = await user.getIdToken();
-      const res = await fetch('http://localhost:5000/my-exports', {
+      const res = await fetch('https://car-hub-server-rlpm.vercel.app/my-exports', {
         headers: { authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -41,7 +47,7 @@ const MyExports = () => {
 
     try {
       const token = await user.getIdToken();
-      const res = await fetch(`http://localhost:5000/products/${productId}`, {
+      const res = await fetch(`https://car-hub-server-rlpm.vercel.app/products/${productId}`, {
         method: 'DELETE',
         headers: { authorization: `Bearer ${token}` }
       });
@@ -64,7 +70,7 @@ const MyExports = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-black to-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-900">
         <p className="text-xl text-cyan-400">Login to view your exports</p>
       </div>
     );
@@ -72,20 +78,20 @@ const MyExports = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-black to-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-900">
         <div className="w-16 h-16 border-4 border-t-cyan-400 border-r-cyan-300 border-b-cyan-500 border-l-cyan-600 rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-black to-slate-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-900 py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-7xl mx-auto"
       >
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-300 to-white">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
           My <span className="text-primary">Exports</span>
         </h1>
 
@@ -95,7 +101,7 @@ const MyExports = () => {
             animate={{ opacity: 1 }}
             className="text-center py-20"
           >
-            <p className="text-2xl text-gray-400 mb-6">No exports added yet.</p>
+            <p className="text-2xl text-gray-600 dark:text-gray-400 mb-6">No exports added yet.</p>
             <button
               onClick={() => navigate('/add-export')}
               className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold rounded-xl hover:shadow-lg hover:shadow-cyan-500/50 transform hover:scale-105 transition"
@@ -151,7 +157,7 @@ const ExportCard = ({ product, index, onDelete, onUpdate }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
       whileHover={{ y: -12, scale: 1.02 }}
-      className="group relative bg-gradient-to-br from-slate-900/80 via-black/90 to-slate-900/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-cyan-500/20 shadow-2xl hover:shadow-cyan-500/40 transition-all duration-500"
+      className="group relative bg-gradient-to-br from-gray-100/80 dark:from-slate-900/80 via-white/90 dark:via-black/90 to-gray-100/80 dark:to-slate-900/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-cyan-500/20 shadow-2xl hover:shadow-cyan-500/40 transition-all duration-500"
     >
       <div className="aspect-[4/3] relative overflow-hidden">
         <img
@@ -160,7 +166,7 @@ const ExportCard = ({ product, index, onDelete, onUpdate }) => {
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           onError={(e) => e.target.src = "https://via.placeholder.com/600x400/1a1a1a/cccccc?text=No+Image"}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white/80 dark:from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80" />
 
         <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
           <FaMapMarkerAlt /> {originCountry}
@@ -172,7 +178,7 @@ const ExportCard = ({ product, index, onDelete, onUpdate }) => {
       </div>
 
       <div className="p-6 space-y-4">
-        <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-2">
+        <h3 className="text-xl font-bold text-black dark:text-white group-hover:text-cyan-300 transition-colors line-clamp-2">
           {productName}
         </h3>
 
@@ -182,7 +188,7 @@ const ExportCard = ({ product, index, onDelete, onUpdate }) => {
             {[...Array(5)].map((_, i) => (
               <FaStar key={i} className={`text-sm ${i < Math.floor(rating) ? "text-yellow-400" : "text-gray-600"}`} />
             ))}
-            <span className="ml-1 text-xs text-gray-400">({rating})</span>
+            <span className="ml-1 text-xs text-gray-600 dark:text-gray-400">({rating})</span>
           </div>
         </div>
 
@@ -227,7 +233,7 @@ const UpdateModal = ({ product, onClose, onUpdate }) => {
 
     try {
       const token = await user.getIdToken();
-      const res = await fetch(`http://localhost:5000/products/${product._id}`, {
+      const res = await fetch(`https://car-hub-server-rlpm.vercel.app/products/${product._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -251,13 +257,13 @@ const UpdateModal = ({ product, onClose, onUpdate }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-white/80 dark:bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="bg-gradient-to-br from-slate-900 via-black to-slate-900 rounded-3xl p-8 max-w-2xl w-full border border-cyan-500/30 shadow-2xl"
+        className="bg-gradient-to-br from-gray-100 dark:from-slate-900 via-white dark:via-black to-gray-100 dark:to-slate-900 rounded-3xl p-8 max-w-2xl w-full border border-cyan-500/30 shadow-2xl"
       >
-        <h3 className="text-2xl font-bold text-cyan-300 mb-6 text-center">Update Export</h3>
+        <h3 className="text-2xl font-bold text-cyan-300 mb-4 text-center">Update Export</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           {['productName', 'productImage', 'price', 'originCountry', 'rating', 'availableQuantity'].map(field => (
             <div key={field}>
@@ -269,7 +275,7 @@ const UpdateModal = ({ product, onClose, onUpdate }) => {
                 name={field}
                 defaultValue={product[field]}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white focus:outline-none focus:border-cyan-400 transition"
+                className="w-full px-4 py-3 bg-gray-100/10 dark:bg-white/10 border border-cyan-500/30 rounded-xl text-black dark:text-white focus:outline-none focus:border-cyan-400 transition"
               />
             </div>
           ))}
@@ -277,7 +283,7 @@ const UpdateModal = ({ product, onClose, onUpdate }) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-white/10 text-gray-400 py-3 rounded-xl hover:bg-white/20 transition"
+              className="flex-1 bg-gray-100/10 dark:bg-white/10 text-gray-600 dark:text-gray-400 py-3 rounded-xl hover:bg-gray-100/20 dark:hover:bg-white/20 transition"
             >
               Cancel
             </button>

@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import React, { useRef } from "react";
 import Banner from "../Components/Banner";
 import LatestProducts from "../Components/LatestProducts";
@@ -12,7 +11,7 @@ const Home = () => {
   const newsletterRef = useRef(null);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black">
+    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-black">
       {/* Navbar */}
       <Navbar newsletterRef={newsletterRef} />
 
@@ -49,10 +48,10 @@ const Home = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="max-w-4xl mx-auto"
           >
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 leading-tight">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-cyan-400 via-blue-500 to-black dark:to-cyan-400 leading-tight">
               Experience the Future of Driving
             </h2>
-            <p className="mt-6 text-lg sm:text-xl text-gray-300 leading-relaxed">
+            <p className="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
               Import & Export Premium EVs Globally –{" "}
               <span className="text-cyan-400 font-bold">Seamless, Secure, Swift</span>
             </p>
