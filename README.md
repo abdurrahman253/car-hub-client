@@ -89,6 +89,8 @@ cp .env.example .env.local
 # Start dev server
 npm run dev
 
+```
+
 
 
 ### Required `.env` Variables
@@ -99,36 +101,41 @@ VITE_FIREBASE_PROJECT_ID=your_project_id
 VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
 VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
-VITE_API_BASE_URL=https://your-backend-url.vercel.app
+VITE_API_BASE_URL=https://your-backend-url.vercel.app 
 
-🚀 Deployment
+```
+
+ ### 🚀 Deployment
+
 Netlify / Vercel Ready – Zero config needed!
 bashnpm run build
+
+
 # → Output goes to /dist folder
 Just connect your GitHub repo to Netlify or Vercel → it auto-detects Vite + React and deploys instantly!
 
-📈 Performance Optimizations
+### 📈 Performance Optimizations
 
-⚡ Code Splitting & Lazy Loading
-🖼️ Image Lazy Load + Fallback Handling
-🔍 Debounced Search (300ms)
-🌳 Tree Shaking & Production Minification
-🚀 Fast Refresh & Optimized Bundle Size
-
-
-🔮 Future Roadmap
-
-🌐 Multi-language Support (i18n)
-💳 Secure Payment Gateway (Stripe / PayPal)
-🛠️ Full Admin Dashboard
-🤖 AI-Powered Vehicle Recommendations
-📱 React Native Mobile App (iOS & Android)
-⚡ Real-time Updates with WebSocket / Socket.io
-🚀 Switch to GraphQL API
-🔔 Push Notifications & Offline PWA Support
+- ⚡ Code Splitting & Lazy Loading
+- 🖼️ Image Lazy Load + Fallback Handling
+- 🔍 Debounced Search (300ms)
+- 🌳 Tree Shaking & Production Minification
+- 🚀 Fast Refresh & Optimized Bundle Size
 
 
-🤝 Contributing
+### 🔮 Future Roadmap
+
+- 🌐 Multi-language Support (i18n)
+- 💳 Secure Payment Gateway (Stripe / PayPal)
+- 🛠️ Full Admin Dashboard
+- 🤖 AI-Powered Vehicle Recommendations
+- 📱 React Native Mobile App (iOS & Android)
+- ⚡ Real-time Updates with WebSocket / Socket.io
+- 🚀 Switch to GraphQL API
+- 🔔 Push Notifications & Offline PWA Support
+
+
+## 🤝 Contributing
 Contributions are very welcome! 🎉
 Please follow these guidelines:
 
@@ -138,13 +145,17 @@ Test your changes thoroughly
 Open a Pull Request – we review fast!
 
 
-📄 License
+### 📄 License
 This project is licensed under the MIT License – © 2025
 
 
-⚡ Car Hub – Where Premium Electric Vehicles Meet Global Opportunities
-Made with ❤️ by Abdur Rahman
+<div align="center">
+### ⚡ Car Hub – Where Premium Electric Vehicles Meet Global Opportunities
+ ***Made with ❤️ by Abdur Rahman**
 GitHub: @abdurrahman253
 GitHub stars
 GitHub forks
 ⭐ Star this repo if you love it! It motivates me a lot 🚀
+
+
+<div>
