@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { FaCar } from 'react-icons/fa';
 import { Mail, Linkedin, Facebook, ChevronUp } from 'lucide-react';
 
-
 const XLogo = () => (
   <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -22,11 +21,11 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { label: 'All Products', href: '/all-products' },
-    { label: 'My Exports', href: '/my-exports' },
-    { label: 'My Imports', href: '/my-imports' },
-    { label: 'Add Export', href: '/add-export' },
-    { label: 'Terms of Service', href: '/terms' }
+    { label: 'Home', path: '/' } ,
+    { label: 'All Products', path: '/all-products'},
+    { label: 'My Exports', path: '/my-exports' },
+    { label: 'My Imports', path: '/my-imports' },
+    { label: 'Add Export', path: '/add-export' },
   ];
 
   const services = [
@@ -88,13 +87,13 @@ const Footer = () => {
               <ul className="space-y-3">
                 {quickLinks.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
+                    <Link
+                      to={link.path}
                       className="text-gray-600 dark:text-gray-400 hover:text-cyan-300 transition-all duration-300 flex items-center gap-2 group text-sm"
                     >
                       <span className="w-1.5 h-1.5 bg-cyan-500/50 rounded-full group-hover:bg-cyan-400 transition"></span>
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
