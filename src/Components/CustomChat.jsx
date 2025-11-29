@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaPaperPlane, FaTimes, FaHeadset } from "react-icons/fa";
 
@@ -8,6 +9,15 @@ const CustomChat = () => {
   const [messages, setMessages] = useState([
     { text: "Welcome to CARHUB! How can we help you with EV import/export?", sender: "bot" }
   ]);
+
+   // Hide Tawk.to widget on mount
+  useEffect(() => {
+  if (window.Tawk_API) {
+    window.Tawk_API.hideWidget();
+  }
+}, []);
+
+
 
   const sendMessage = () => {
     if (message.trim()) {
@@ -19,11 +29,17 @@ const CustomChat = () => {
     }
   };
 
+  const openTawk = () => {
+  if (window.Tawk_API) {
+    window.Tawk_API.toggle();
+  }
+};
+
   return (
     <>
       {/* Toggle Button */}
       <button
-        onClick={() => setOpen(!open)}
+        onClick={openTawk}
         className="fixed bottom-23 right-4 group flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold px-6 py-4 rounded-full shadow-2xl shadow-cyan-500/70 hover:shadow-cyan-500/90 transition-all duration-300 z-[9999]"
         style={{ pointerEvents: "auto" }}
       >
@@ -43,13 +59,13 @@ const CustomChat = () => {
           w-96 h-96 bg-gray-100/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-cyan-500/30 flex flex-col z-[9998]"
           style={{ pointerEvents: "auto" }}
         >
-          <div className="p-4 border-b border-cyan-500/30 flex justify-between items-center">
+          <div className="flex items-center justify-between p-4 border-b border-cyan-500/30">
             <h3 className="font-bold text-black dark:text-white">CARHUB Support</h3>
-            <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white p-1">
+            <button onClick={() => setOpen(false)} className="p-1 text-gray-400 hover:text-white">
               <FaTimes />
             </button>
           </div>
-          <div className="flex-1 p-4 overflow-y-auto space-y-3">
+          <div className="flex-1 p-4 space-y-3 overflow-y-auto">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-xs px-4 py-2 rounded-2xl text-sm ${msg.sender === "user" ? "bg-cyan-500 text-black" : "bg-gray-200/10 dark:bg-white/10 text-gray-600 dark:text-gray-300"}`}>
@@ -58,16 +74,16 @@ const CustomChat = () => {
               </div>
             ))}
           </div>
-          <div className="p-4 border-t border-cyan-500/30 flex gap-2">
+          <div className="flex gap-2 p-4 border-t border-cyan-500/30">
             <input
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && sendMessage()}
               placeholder="Type a message..."
-              className="flex-1 bg-gray-200/10 dark:bg-white/10 text-black dark:text-white placeholder-gray-500 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="flex-1 px-4 py-2 text-sm text-black placeholder-gray-500 bg-gray-200/10 dark:bg-white/10 dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400"
             />
-            <button onClick={sendMessage} className="bg-cyan-500 text-black p-3 rounded-xl hover:bg-cyan-400 transition">
+            <button onClick={sendMessage} className="p-3 text-black transition bg-cyan-500 rounded-xl hover:bg-cyan-400">
               <FaPaperPlane />
             </button>
           </div>

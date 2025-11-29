@@ -19,16 +19,16 @@ const Home = () => {
       <Banner />
 
       {/* Floating Neon Orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <motion.div
           animate={{ x: [0, 30, 0], y: [0, -30, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"
+          className="absolute rounded-full top-20 left-10 w-72 h-72 bg-cyan-500/20 blur-3xl"
         />
         <motion.div
           animate={{ x: [0, -40, 0], y: [0, 40, 0] }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-32 right-20 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"
+          className="absolute rounded-full bottom-32 right-20 w-96 h-96 bg-blue-600/20 blur-3xl"
         />
         <motion.div
           animate={{ scale: [1, 1.2, 1] }}
@@ -40,7 +40,7 @@ const Home = () => {
       {/* Main Content */}
       <main className="relative z-10">
         {/* Intro */}
-        <section className="container mx-auto px-6 py-20 text-center">
+        <section className="container px-6 py-20 mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -48,12 +48,12 @@ const Home = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="max-w-4xl mx-auto"
           >
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-cyan-400 via-blue-500 to-black dark:to-cyan-400 leading-tight">
+            <h2 className="text-4xl font-black leading-tight text-transparent sm:text-5xl lg:text-6xl bg-clip-text bg-gradient-to-r from-black dark:from-cyan-400 via-blue-500 to-black dark:to-cyan-400">
               Experience the Future of Driving
             </h2>
-            <p className="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+            <p className="mt-6 text-lg leading-relaxed text-gray-600 sm:text-xl dark:text-gray-300">
               Import & Export Premium EVs Globally –{" "}
-              <span className="text-cyan-400 font-bold">Seamless, Secure, Swift</span>
+              <span className="font-bold text-cyan-400">Seamless, Secure, Swift</span>
             </p>
           </motion.div>
         </section>
