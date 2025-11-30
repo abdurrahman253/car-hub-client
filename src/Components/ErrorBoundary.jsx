@@ -22,50 +22,50 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950 flex items-center justify-center px-6 relative overflow-hidden">
+        <div className="relative flex items-center justify-center min-h-screen px-6 overflow-hidden bg-gradient-to-br from-base-200 dark:from-base-200 via-base-100 dark:via-base-100 to-base-200 dark:to-base-200">
           {/* Background Glow */}
           <div className="absolute inset-0 opacity-30">
-            <div className="absolute top-20 left-20 w-96 h-96 bg-red-600/30 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-20 w-80 h-80 bg-orange-600/30 rounded-full blur-3xl animate-pulse delay-700"></div>
+            <div className="absolute rounded-full top-20 left-20 w-96 h-96 bg-red-600/30 blur-3xl animate-pulse"></div>
+            <div className="absolute delay-700 rounded-full bottom-20 right-20 w-80 h-80 bg-orange-600/30 blur-3xl animate-pulse"></div>
           </div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative z-10 max-w-2xl w-full text-center"
+            className="relative z-10 w-full max-w-2xl text-center"
           >
             {/* Icon */}
             <motion.div
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="inline-flex items-center justify-center w-28 h-28 bg-gradient-to-br from-red-600/20 to-orange-600/20 rounded-full border border-red-500/30 backdrop-blur-xl mb-8"
+              className="inline-flex items-center justify-center mb-8 border rounded-full w-28 h-28 bg-gradient-to-br from-red-600/20 to-orange-600/20 border-red-500/30 backdrop-blur-xl"
             >
               <FaExclamationTriangle className="text-5xl text-red-400" />
             </motion.div>
 
             {/* Title */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-red-400 via-orange-400 to-red-400 mb-4">
+            <h1 className="mb-4 text-5xl font-black text-transparent sm:text-6xl md:text-7xl bg-clip-text bg-gradient-to-r from-red-400 via-orange-400 to-red-400">
               Oops! Something Went Wrong
             </h1>
 
-            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            <p className="mb-8 text-lg leading-relaxed sm:text-xl text-base-content/60 dark:text-base-content/60">
               We encountered an unexpected error while loading this page. Our team has been notified.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <button
                 onClick={this.handleReload}
-                className="group inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-orange-600 text-white font-bold px-8 py-4 rounded-full shadow-2xl hover:shadow-red-600/70 transform hover:scale-105 transition-all duration-300"
+                className="inline-flex items-center gap-3 px-8 py-4 transition-all duration-300 transform rounded-full shadow-2xl group bg-gradient-to-r from-red-600 to-orange-600 text-base-content hover:shadow-red-600/70 hover:scale-105"
               >
-                <FaRedo className="group-hover:rotate-180 transition-transform duration-500" />
+                <FaRedo className="transition-transform duration-500 group-hover:rotate-180" />
                 Try Again
               </button>
 
               <Link
                 to="/"
-                className="group inline-flex items-center gap-3 bg-gray-100/10 dark:bg-white/10 backdrop-blur-xl border border-red-500/30 text-red-400 font-bold px-8 py-4 rounded-full hover:bg-red-500/20 hover:border-red-400 transition-all duration-300"
+                className="inline-flex items-center gap-3 px-8 py-4 transition-all duration-300 border rounded-full group bg-base-content/60 dark:bg-base-content/60 backdrop-blur-xl border-base-content/60 hover:bg-base-content/60 hover:border-base-content/60"
               >
                 <FaHome />
                 Back to Home
@@ -77,9 +77,9 @@ class ErrorBoundary extends React.Component {
               <motion.details
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                className="mt-12 p-6 bg-gray-100/5 dark:bg-white/5 backdrop-blur-xl rounded-2xl border border-red-500/20 text-left text-xs text-gray-600 dark:text-gray-400"
+                className="p-6 mt-12 text-xs text-left border bg-base-content/60 dark:bg-base-content/60 backdrop-blur-xl rounded-2xl border-base-content/60 text-base-content/60 dark:text-base-content/60"
               >
-                <summary className="cursor-pointer font-bold text-red-400 mb-2">
+                <summary className="mb-2 font-bold text-red-400 cursor-pointer">
                   Technical Details (Dev Only)
                 </summary>
                 <pre className="overflow-auto max-h-48">

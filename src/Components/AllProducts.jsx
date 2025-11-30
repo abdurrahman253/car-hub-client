@@ -1,177 +1,175 @@
+// src/Pages/AllProducts.jsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { FaSearch, FaCar } from "react-icons/fa";
+import toast from "react-hot-toast";
 import Product from "./Product";
-import { FaSearch } from "react-icons/fa";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Fetch all products
+  // Unified fetch function
+  const fetchProducts = async (query = "") => {
+    setLoading(true);
+    try {
+      const url = query
+        ? `https://car-hub-server-rlpm.vercel.app/search?search=${encodeURIComponent(query.trim())}`
+        : "https://car-hub-server-rlpm.vercel.app/products";
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      let productList = [];
+
+      if (data.success && Array.isArray(data.data)) {
+        productList = data.data;
+      } else if (Array.isArray(data)) {
+        productList = data;
+      }
+
+      setProducts(productList);
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setProducts([]);
+      toast.error("Failed to load products");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial load
   useEffect(() => {
-    fetch("https://car-hub-server-rlpm.vercel.app/products")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to load products");
-        return res.json();
-      })
-      .then((response) => {
-        console.log("API Response:", response);
-        
-       
-        if (response.success && Array.isArray(response.data)) {
-          setProducts(response.data);
-        } else if (Array.isArray(response)) {
-        
-          setProducts(response);
-        } else {
-          setProducts([]);
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Fetch error:", err);
-        setError(err.message);
-        setLoading(false);
-      });
+    fetchProducts();
   }, []);
 
   // Search with debounce
   useEffect(() => {
-    if (!searchText.trim()) {
-      
-      setLoading(true);
-      fetch("https://car-hub-server-rlpm.vercel.app/products")
-        .then((res) => res.json())
-        .then((response) => {
-          setProducts(response.success ? response.data : response);
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
-      return;
-    }
-
     const timer = setTimeout(() => {
-      setLoading(true);
-      fetch(`https://car-hub-server-rlpm.vercel.app/search?search=${encodeURIComponent(searchText)}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setProducts(Array.isArray(data) ? data : []);
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-          setProducts([]);
-        });
+      if (searchText.trim()) {
+        fetchProducts(searchText);
+      } else {
+        fetchProducts(); // reset to all products
+      }
     }, 600);
 
     return () => clearTimeout(timer);
   }, [searchText]);
 
   return (
-    <section className="container mx-auto px-6 py-20">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="text-center mb-16"
-      >
-        <p className="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-2">
-          Full Inventory
-        </p>
-        <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
-          All Premium EVs
-        </h2>
-        <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
-          Global import & export - Japan, Germany, USA, Korea
-        </p>
-      </motion.div>
-
-      {/* Search Box */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="max-w-2xl mx-auto mb-12"
-      >
-        <div className="relative group">
-          <FaSearch className="absolute left-6 top-1/2 -translate-y-1/2 text-cyan-400 text-xl group-focus-within:text-cyan-300 transition" />
-          <input
-            type="text"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Search by model name..."
-            className="w-full pl-14 pr-6 py-5 bg-gray-100 dark:bg-white/5 backdrop-blur-2xl border border-gray-300 dark:border-white/10 rounded-full text-gray-900 dark:text-white placeholder-gray-400 text-lg focus:outline-none focus:border-cyan-400/50 focus:bg-white/10 transition-all duration-300 shadow-xl"
-          />
-          {searchText && (
-            <button
-              onClick={() => setSearchText("")}
-              className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition text-xl"
-            >
-              ×
-            </button>
-          )}
-        </div>
-      </motion.div>
-
-      {/* Loading */}
-      {loading && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-gray-200 dark:bg-slate-800/50 backdrop-blur-xl rounded-3xl h-96 animate-pulse" />
-          ))}
-        </div>
-      )}
-
-      {/* Error */}
-      {error && (
-        <div className="text-center py-20">
-          <p className="text-red-400 text-xl font-bold">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 bg-red-600 text-white px-6 py-3 rounded-full"
-          >
-            Retry
-          </button>
-        </div>
-      )}
-
-      {/* No Results */}
-      {!loading && !error && products.length === 0 && (
+    <section className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-4 py-16 md:py-24">
+        {/* Hero Header */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center py-20"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, type: "spring", stiffness: 100 }}
+          className="text-center mb-16"
         >
-          <h3 className="text-3xl font-bold text-cyan-400 mb-4">No Products Found</h3>
-          <p className="text-gray-600 dark:text-gray-400">Try searching for "Tesla", "Porsche", or "BMW"</p>
+          <p className="text-cyan-400 font-bold tracking-widest uppercase text-sm mb-4">
+            Premium Electric Vehicles
+          </p>
+          <h1 className="text-5xl md:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-6 leading-tight">
+            All Premium EVs
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto">
+            Import luxury electric vehicles directly from Japan • Germany • USA • Korea
+          </p>
         </motion.div>
-      )}
 
-      {/* Products Grid */}
-      {!loading && products.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {products.map((product, index) => (
-            <motion.div
-              key={product._id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <Product product={product} />
-            </motion.div>
-          ))}
-        </div>
-      )}
+        {/* Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="max-w-3xl mx-auto mb-16"
+        >
+          <div className="relative group">
+            <FaSearch className="absolute left-6 top-1/2 -translate-y-1/2 text-cyan-400 text-xl transition group-focus-within:text-cyan-300" />
+            <input
+              type="text"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              placeholder="Search by model: Tesla, Porsche Taycan, BMW i7, Kia EV9..."
+              className="w-full pl-16 pr-14 py-5 bg-white dark:bg-gray-800 backdrop-blur-2xl border border-gray-300 dark:border-gray-700 rounded-3xl text-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/20 transition-all duration-300 shadow-2xl"
+            />
+            {searchText && (
+              <button
+                onClick={() => setSearchText("")}
+                className="absolute right-6 top-1/2 -translate-y-1/2 text-3xl text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition hover:scale-110"
+                aria-label="Clear search"
+              >
+                ×
+              </button>
+            )}
+          </div>
+        </motion.div>
+
+        {/* Loading Skeleton */}
+        {loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {[...Array(12)].map((_, i) => (
+              <div
+                key={i}
+                className="bg-gray-200 dark:bg-gray-800 backdrop-blur rounded-3xl h-96 animate-pulse shadow-xl"
+              />
+            ))}
+          </div>
+        )}
+
+        {/* No Results State */}
+        {!loading && products.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center py-24"
+          >
+            <FaCar className="mx-auto text-9xl text-gray-300 dark:text-gray-700 mb-8" />
+            <h3 className="text-4xl font-bold text-gray-700 dark:text-gray-300 mb-4">
+              No Vehicles Found
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-lg mx-auto">
+              Try searching for <strong>Tesla</strong>, <strong>Porsche Taycan</strong>,{" "}
+              <strong>BMW i7</strong>, or <strong>Kia EV6</strong>
+            </p>
+          </motion.div>
+        )}
+
+        {/* Products Grid */}
+        {!loading && products.length > 0 && (
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
+            initial="hidden"
+            animate="show"
+          >
+            {products.map((product, index) => (
+              <motion.div
+                key={product._id}
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+                }}
+              >
+                <Product product={product} />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </div>
     </section>
   );
 };

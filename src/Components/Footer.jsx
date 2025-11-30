@@ -41,38 +41,38 @@ const Footer = () => {
       {/* Mobile Floating Back to Top */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-4 right-4 z-50 md:hidden group flex items-center justify-center w-16 h-16 rounded-full bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl border border-gray-300/30 dark:border-white/30 shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/90 transition-all duration-500 ring-4 ring-cyan-400/20"
+        className="fixed z-50 flex items-center justify-center w-16 h-16 transition-all duration-500 border rounded-full shadow-2xl bottom-4 right-4 md:hidden group bg-base-200 backdrop-blur-3xl border-base-300 shadow-cyan-500/60 hover:shadow-cyan-500/90 ring-4 ring-cyan-400/20"
         aria-label="Back to Top"
       >
-        <ChevronUp className="w-9 h-9 text-cyan-300 group-hover:-translate-y-2 transition" />
+        <ChevronUp className="transition w-9 h-9 text-cyan-300 group-hover:-translate-y-2" />
       </button>
 
-      <footer className="relative bg-gradient-to-b from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950 border-t border-cyan-900/30 overflow-hidden">
+      <footer className="relative overflow-hidden border-t bg-base-200 border-cyan-900/30">
         {/* Background Glow */}
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-96 h-96 bg-cyan-600 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-32 right-1/3 w-80 h-80 bg-blue-700 rounded-full blur-3xl animate-pulse delay-700"></div>
+        <div className="absolute inset-0 pointer-events-none opacity-30">
+          <div className="absolute rounded-full top-20 left-1/4 w-96 h-96 bg-cyan-600 blur-3xl animate-pulse"></div>
+          <div className="absolute delay-700 bg-blue-700 rounded-full bottom-32 right-1/3 w-80 h-80 blur-3xl animate-pulse"></div>
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
+        <div className="container relative z-10 px-6 py-20 mx-auto">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
             {/* Brand Section  */}
             <div className="space-y-6">
               <Link to="/" className="flex items-center gap-4 group">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-2xl shadow-cyan-500/50 group-hover:scale-110 transition">
-                  <FaCar className="w-8 h-8 text-white" />
+                <div className="flex items-center justify-center transition shadow-2xl w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 shadow-cyan-500/50 group-hover:scale-110">
+                  <FaCar className="w-8 h-8 text-base-content" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white to-gray-600 dark:to-gray-400">
+                  <h1 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-base-content to-base-content/70">
                     CARHUB
                   </h1>
-                  <p className="text-xs text-cyan-400 tracking-widest">PREMIUM EV MARKETPLACE</p>
+                  <p className="text-xs tracking-widest text-cyan-400">PREMIUM EV MARKETPLACE</p>
                 </div>
               </Link>
-              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-xs">
+              <p className="max-w-xs text-sm leading-relaxed text-base-content/70">
                 Global leader in luxury electric & hybrid vehicle import/export. Experience the future of automotive excellence.
               </p>
-              <div className="flex items-center gap-4 text-gray-500 text-xs">
+              <div className="flex items-center gap-4 text-xs text-base-content/70">
                 <Mail className="w-4 h-4 text-cyan-400" />
                 <span>support@carhub.io</span>
               </div>
@@ -80,7 +80,7 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h4 className="text-xl font-bold text-black dark:text-white mb-6 relative inline-block">
+              <h4 className="relative inline-block mb-6 text-xl font-bold text-base-content">
                 Quick Links
                 <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full"></span>
               </h4>
@@ -89,7 +89,7 @@ const Footer = () => {
                   <li key={link.label}>
                     <Link
                       to={link.path}
-                      className="text-gray-600 dark:text-gray-400 hover:text-cyan-300 transition-all duration-300 flex items-center gap-2 group text-sm"
+                      className="flex items-center gap-2 text-sm transition-all duration-300 text-base-content/70 hover:text-cyan-300 group"
                     >
                       <span className="w-1.5 h-1.5 bg-cyan-500/50 rounded-full group-hover:bg-cyan-400 transition"></span>
                       {link.label}
@@ -101,7 +101,7 @@ const Footer = () => {
 
             {/* Services */}
             <div>
-              <h4 className="text-xl font-bold text-black dark:text-white mb-6 relative inline-block">
+              <h4 className="relative inline-block mb-6 text-xl font-bold text-base-content">
                 Our Services
                 <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full"></span>
               </h4>
@@ -109,7 +109,7 @@ const Footer = () => {
                 {services.map((service) => (
                   <li key={service} className="flex items-start gap-3 group">
                     <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full mt-1.5 group-hover:scale-150 transition-transform"></div>
-                    <span className="text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition text-sm">{service}</span>
+                    <span className="text-sm transition text-base-content/70 group-hover:text-base-content">{service}</span>
                   </li>
                 ))}
               </ul>
@@ -118,7 +118,7 @@ const Footer = () => {
             {/* Connect & Newsletter */}
             <div className="space-y-8">
               <div>
-                <h4 className="text-xl font-bold text-black dark:text-white mb-6 relative inline-block">
+                <h4 className="relative inline-block mb-6 text-xl font-bold text-base-content">
                   Stay Connected
                   <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full"></span>
                 </h4>
@@ -131,9 +131,10 @@ const Footer = () => {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-12 h-12 rounded-2xl bg-gray-100/5 dark:bg-white/5 backdrop-blur-2xl border border-gray-300/10 dark:border-white/10 flex items-center justify-center hover:bg-cyan-500/20 hover:border-cyan-400 hover:scale-110 transition-all duration-500 shadow-xl hover:shadow-cyan-500/50 group"
+                        className="flex items-center justify-center w-12 h-12 text-gray-800 transition-all duration-500 border shadow-xl rounded-2xl bg-base-200 backdrop-blur-2xl border-base-300 hover:bg-cyan-500/20 hover:border-cyan-400 hover:scale-110 hover:shadow-cyan-500/50 group dark:text-white"
+
                       >
-                        <Icon className="text-gray-600 dark:text-gray-400 group-hover:text-cyan-300 transition" />
+                        <Icon className="transition text-base-content group-hover:text-cyan-300" />
                       </a>
                     );
                   })}
@@ -142,9 +143,9 @@ const Footer = () => {
 
               {/* Newsletter */}
               <div className="w-full">
-                <div className="bg-gray-100/5 dark:bg-white/5 backdrop-blur-2xl border border-gray-300/10 dark:border-white/10 rounded-2xl p-6 shadow-2xl">
-                  <h5 className="text-black dark:text-white font-bold mb-2 text-lg">Exclusive Deals</h5>
-                  <p className="text-gray-600 dark:text-gray-400 text-xs mb-5 leading-relaxed">
+                <div className="p-6 border shadow-2xl bg-base-200 backdrop-blur-2xl border-base-300 rounded-2xl">
+                  <h5 className="mb-2 text-lg font-bold text-base-content">Exclusive Deals</h5>
+                  <p className="mb-5 text-xs leading-relaxed text-base-content/70">
                     Get first access to new arrivals & premium offers
                   </p>
                   <form className="flex flex-col gap-3">
@@ -152,11 +153,11 @@ const Footer = () => {
                       type="email"
                       placeholder="your@email.com"
                       required
-                      className="w-full px-5 py-4 bg-gray-100/10 dark:bg-white/10 border border-gray-300/20 dark:border-white/20 rounded-xl text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition text-sm"
+                      className="w-full px-5 py-4 text-sm transition border bg-base-100 border-base-300 rounded-xl text-base-content placeholder-base-content/70 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
                     />
                     <button
                       type="submit"
-                      className="w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl font-bold text-sm hover:shadow-lg hover:shadow-cyan-500/60 hover:scale-[1.02] transition-all duration-300"
+                      className="w-full px-6 py-4 text-white bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl font-bold text-sm hover:shadow-lg hover:shadow-cyan-500/60 hover:scale-[1.02] transition-all duration-300"
                     >
                       Subscribe Now
                     </button>
@@ -167,25 +168,25 @@ const Footer = () => {
           </div>
 
           {/* Desktop Bottom Bar */}
-          <div className="hidden md:flex justify-between items-center mt-16 pt-8 border-t border-gray-300/10 dark:border-white/10">
-            <p className="text-gray-500 text-xs">
+          <div className="items-center justify-between hidden pt-8 mt-16 border-t md:flex border-base-300">
+            <p className="text-xs text-base-content/70">
               Made with <span className="text-red-500">❤️</span> for the future of driving
             </p>
             {/* Desktop Back to Top */}
             <button
               onClick={scrollToTop}
-              className="group flex items-center gap-3 px-8 py-4 bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl border border-gray-300/30 dark:border-white/30 rounded-full hover:bg-gray-100/20 dark:hover:bg-white/20 hover:border-cyan-400 transition-all duration-500 shadow-2xl shadow-cyan-500/60 hover:shadow-cyan-500/90 ring-4 ring-cyan-400/20"
+              className="flex items-center gap-3 px-8 py-4 transition-all duration-500 border rounded-full shadow-2xl group bg-base-200 backdrop-blur-3xl border-base-300 hover:bg-base-200 hover:border-cyan-400 shadow-cyan-500/60 hover:shadow-cyan-500/90 ring-4 ring-cyan-400/20"
             >
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-cyan-300">Back to Top</span>
-              <ChevronUp className="w-6 h-6 text-cyan-400 group-hover:-translate-y-2 transition" />
+              <span className="text-sm font-medium text-base-content/70 group-hover:text-cyan-300">Back to Top</span>
+              <ChevronUp className="w-6 h-6 transition text-cyan-400 group-hover:-translate-y-2" />
             </button>
           </div>
         </div>
 
         {/* MOBILE COPYRIGHT */}
-        <div className="md:hidden bg-gradient-to-t from-white dark:from-black via-gray-100 dark:via-slate-950 to-transparent border-t border-gray-300/10 dark:border-white/10 backdrop-blur-2xl z-40">
-          <div className="container mx-auto px-6 py-4 text-center">
-            <p className="text-gray-500 text-xs">
+        <div className="z-40 border-t md:hidden bg-gradient-to-t from-base-100 via-base-200 to-transparent border-base-300 backdrop-blur-2xl">
+          <div className="container px-6 py-4 mx-auto text-center">
+            <p className="text-xs text-base-content/70">
               Made with <span className="text-red-500">❤️</span> for the future of driving
             </p>
           </div>

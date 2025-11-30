@@ -20,7 +20,7 @@ const NewsLetter = forwardRef((_, ref) => {
   return (
     <section
       ref={ref}
-      className="relative py-20 overflow-hidden"
+      className="relative py-20 overflow-hidden bg-gradient-to-b from-base-content via-base-content to-base-content"
       style={{
         backgroundImage:
           "url('https://motorx-six.vercel.app/assets/images/page/car.png')",
@@ -29,24 +29,24 @@ const NewsLetter = forwardRef((_, ref) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-white/80 dark:from-black/80 via-gray-100/70 dark:via-slate-950/70 to-white/80 dark:to-black/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-base-100/80 dark:from-base-content/80 via-base-200/70 dark:via-base-content/60 to-base-100/80 dark:to-base-content/80 backdrop-blur-sm"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 blur-xl"></div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container relative z-10 px-6 mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto text-center"
         >
-          <p className="text-cyan-400 text-sm font-bold tracking-wider uppercase mb-4">
+          <p className="mb-4 text-sm font-bold tracking-wider uppercase text-cyan-400">
             Exclusive EV Insights
           </p>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-black dark:text-white mb-6">
+          <h2 className="mb-6 text-4xl font-black sm:text-5xl lg:text-6xl text-base-content dark:text-base-content">
             Join Our Premium Newsletter
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg mb-12">
+          <p className="mb-12 text-lg text-base-content/60 dark:text-base-content/60">
             Get first access to rare EV imports, market trends, and exclusive
             deals delivered straight to your inbox.
           </p>
@@ -59,28 +59,28 @@ const NewsLetter = forwardRef((_, ref) => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <FaEnvelope className="text-cyan-400 text-xl" />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                <FaEnvelope className="text-xl text-cyan-400" />
               </div>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full pl-12 pr-12 py-6 text-lg bg-gray-100/10 dark:bg-white/10 backdrop-blur-xl border border-cyan-500/30 rounded-3xl text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                className="w-full py-6 pl-12 pr-12 text-lg transition-all duration-300 border bg-base-content/60 dark:bg-base-content/60 backdrop-blur-xl border-cyan-500/30 rounded-3xl text-base-content dark:text-base-content placeholder-base-content/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50"
                 required
               />
               <button
                 type="submit"
-                className="absolute inset-y-0 right-0 pr-4 flex items-center justify-center group"
+                className="absolute inset-y-0 right-0 flex items-center justify-center pr-4 group"
                 disabled={!email.trim()}
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-black px-6 py-6 rounded-3xl font-bold shadow-2xl shadow-cyan-500/50 group-hover:shadow-cyan-500/70 transition-all duration-300"
+                  className="px-6 py-6 font-bold transition-all duration-300 shadow-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-base-content rounded-3xl shadow-cyan-500/50 group-hover:shadow-cyan-500/70"
                 >
-                  <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                  <FaArrowRight className="transition-transform group-hover:translate-x-1" />
                 </motion.div>
               </button>
             </div>
@@ -89,14 +89,14 @@ const NewsLetter = forwardRef((_, ref) => {
               <motion.p
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="mt-4 text-cyan-400 text-sm font-bold"
+                className="mt-4 text-sm font-bold text-cyan-400"
               >
                 Successfully subscribed! Check your inbox.
               </motion.p>
             )}
           </motion.form>
 
-          <p className="mt-6 text-xs text-gray-500">
+          <p className="mt-6 text-xs text-base-content/60">
             We respect your privacy. Unsubscribe anytime.
           </p>
         </motion.div>

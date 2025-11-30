@@ -5,9 +5,11 @@ import { Toaster } from 'react-hot-toast';
 import './index.css'
 import router from './Routes/Router.jsx';
 import AuthProvider from './Provider/AuthProvider.jsx';
+import ThemeProvider from './Provider/ThemeProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <ThemeProvider>
+     <StrictMode>
     <AuthProvider>
       <Toaster 
         position="top-center"
@@ -40,4 +42,5 @@ createRoot(document.getElementById('root')).render(
       <RouterProvider router={router} />
     </AuthProvider>
   </StrictMode>,
+  </ThemeProvider>
 )

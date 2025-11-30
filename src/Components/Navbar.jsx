@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { AuthContext } from "../Provider/AuthProvider";
 import {
   ChevronDownIcon,
   DownloadIcon,
@@ -17,6 +16,8 @@ import {
   UploadIcon,
   XIcon,
 } from "lucide-react";
+import { AuthContext } from "../Provider/AuthProvider";
+import { ThemeContext } from "../Provider/ThemeProvider";
 
 const CarIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -29,35 +30,19 @@ const CarIcon = () => (
 const Navbar = ({ newsletterRef }) => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [theme, setTheme] = useState("light");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logOut } = useContext(AuthContext) || {};
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
-  // Scroll effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Theme persistence
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setTheme(savedTheme || (prefersDark ? "dark" : "light"));
-  }, []);
-
-  useEffect(() => {
-    if (theme) {
-      document.documentElement.classList.toggle("dark", theme === "dark");
-      localStorage.setItem("theme", theme);
-    }
-  }, [theme]);
-
-  const handleThemeToggle = () => setTheme(prev => prev === "light" ? "dark" : "light");
   const handleLogout = async () => {
     try {
       await logOut?.();
@@ -88,37 +73,34 @@ const Navbar = ({ newsletterRef }) => {
 
   return (
     <>
-      {/* MAIN NAVBAR */}
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ${
           scrolled
-            ? "bg-white/80 dark:bg-slate-950/90 backdrop-blur-2xl shadow-2xl border-b border-cyan-500/10"
-            : "bg-transparent"
+            ? "bg-white/80 dark:bg-gray-900/90 backdrop-blur-2xl shadow-2xl border-b border-gray-200 dark:border-gray-700"
+            : "bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <nav className="flex items-center justify-between h-20">
-
-            {/* LOGO */}
             <motion.div
               onClick={() => navigate("/")}
-              className="flex items-center gap-3 group cursor-pointer"
+              className="flex items-center gap-3 cursor-pointer group"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
             >
               <motion.div
                 whileHover={{ rotate: [0, -10, 10, 0] }}
                 transition={{ duration: 0.5 }}
-                className="p-3 rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 shadow-xl"
+                className="p-3 shadow-xl rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600"
               >
                 <CarIcon />
               </motion.div>
               <div>
                 <h1 className="text-2xl font-black tracking-tighter">
-                  <span className="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
+                  <span className="text-transparent bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text">
                     CARHUB
                   </span>
                 </h1>
@@ -128,8 +110,7 @@ const Navbar = ({ newsletterRef }) => {
               </div>
             </motion.div>
 
-            {/* DESKTOP NAV */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="items-center hidden gap-4 lg:flex">
               {mainNavItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = item.path && location.pathname === item.path;
@@ -142,15 +123,15 @@ const Navbar = ({ newsletterRef }) => {
                     className={`relative px-5 py-2.5 rounded-2xl font-medium flex items-center gap-2 cursor-pointer transition-all ${
                       isActive
                         ? "text-cyan-400 bg-cyan-500/10"
-                        : "text-gray-600 dark:text-gray-400 hover:text-cyan-400"
+                        : "text-gray-700 dark:text-gray-300 hover:text-cyan-400"
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    {Icon && <Icon className="w-4 h-4" />}
                     {item.name}
                     {isActive && (
                       <motion.div
                         layoutId="desktopActive"
-                        className="absolute inset-0 rounded-2xl bg-cyan-500/10 border border-cyan-400/30"
+                        className="absolute inset-0 border rounded-2xl bg-cyan-500/10 border-cyan-400/30"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
@@ -163,7 +144,7 @@ const Navbar = ({ newsletterRef }) => {
                   <motion.button
                     onMouseEnter={() => setDropdownOpen(true)}
                     whileHover={{ scale: 1.05 }}
-                    className="px-5 py-2.5 rounded-2xl font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-all"
+                    className="px-5 py-2.5 rounded-2xl font-medium flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-cyan-400 transition-all"
                   >
                     <PackageIcon className="w-4 h-4" />
                     My Account
@@ -176,7 +157,7 @@ const Navbar = ({ newsletterRef }) => {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-full mt-3 w-64 bg-white/90 dark:bg-slate-900/95 backdrop-blur-2xl rounded-2xl border border-cyan-500/20 shadow-2xl overflow-hidden"
+                        className="absolute w-64 mt-3 overflow-hidden border border-gray-200 shadow-2xl top-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl dark:border-gray-600"
                       >
                         {userMenuItems.map((item) => {
                           const Icon = item.icon;
@@ -187,11 +168,11 @@ const Navbar = ({ newsletterRef }) => {
                               onClick={() => { navigate(item.path); setDropdownOpen(false); }}
                               whileHover={{ x: 6 }}
                               className={`px-5 py-4 flex items-center gap-3 cursor-pointer transition-all ${
-                                isActive ? "bg-cyan-500/10 text-cyan-400" : "hover:bg-cyan-500/5"
+                                isActive ? "bg-cyan-500/10 text-cyan-400" : "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                               }`}
                             >
                               <Icon className="w-5 h-5 text-cyan-400" />
-                              <span className="font-medium text-gray-700 dark:text-gray-300">{item.name}</span>
+                              <span className="font-medium">{item.name}</span>
                             </motion.div>
                           );
                         })}
@@ -202,36 +183,24 @@ const Navbar = ({ newsletterRef }) => {
               )}
             </div>
 
-            {/* RIGHT SIDE */}
             <div className="flex items-center gap-4">
+              <label className="swap swap-rotate">
+                <input
+                  type="checkbox"
+                  className="theme-controller"
+                  checked={theme === "dark"}
+                  onChange={toggleTheme}
+                />
+                <SunIcon className="w-5 h-5 text-yellow-500 swap-on" />
+                <MoonIcon className="w-5 h-5 text-blue-600 swap-off" />
+              </label>
 
-              {/* Theme Toggle */}
-              <motion.button
-                whileHover={{ scale: 1.1, rotate: 180 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={handleThemeToggle}
-                className="hidden md:block p-3 rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 hover:border-cyan-400/40 transition-all"
-              >
-                <AnimatePresence mode="wait">
-                  {theme === "light" ? (
-                    <motion.div key="moon" initial={{ rotate: -90 }} animate={{ rotate: 0 }} exit={{ rotate: 90 }}>
-                      <MoonIcon className="w-5 h-5 text-cyan-400" />
-                    </motion.div>
-                  ) : (
-                    <motion.div key="sun" initial={{ rotate: 90 }} animate={{ rotate: 0 }} exit={{ rotate: -90 }}>
-                      <SunIcon className="w-5 h-5 text-yellow-400" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.button>
-
-              {/* User Actions */}
               {user ? (
-                <div className="hidden md:flex items-center gap-3">
+                <div className="items-center hidden gap-3 md:flex">
                   <img
                     src={user.photoURL || "/default-avatar.png"}
                     alt={user.displayName || "User"}
-                    className="w-10 h-10 rounded-full ring-2 ring-cyan-400/60 object-cover shadow-lg"
+                    className="object-cover w-10 h-10 rounded-full shadow-lg ring-2 ring-cyan-400/60"
                   />
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -239,10 +208,10 @@ const Navbar = ({ newsletterRef }) => {
                     onClick={handleLogout}
                     className="group relative px-6 py-2.5 rounded-2xl font-medium text-sm overflow-hidden transition-all duration-500 flex items-center gap-2.5"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-rose-500/20 to-red-600/20 blur-xl scale-0 group-hover:scale-150 transition-transform duration-700" />
+                    <div className="absolute inset-0 transition-transform duration-700 scale-0 bg-gradient-to-r from-rose-500/20 to-red-600/20 blur-xl group-hover:scale-150" />
                     <div className="relative flex items-center gap-2.5">
-                      <LogOutIcon className="w-4 h-4 text-rose-400 group-hover:text-rose-300 transition-colors" />
-                      <span className="bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text text-transparent font-semibold">
+                      <LogOutIcon className="w-4 h-4 text-rose-400 group-hover:text-rose-300" />
+                      <span className="font-semibold text-transparent bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text">
                         Logout
                       </span>
                     </div>
@@ -255,7 +224,7 @@ const Navbar = ({ newsletterRef }) => {
                   onClick={() => navigate("/auth/login")}
                   className="hidden md:flex relative group px-7 py-2.5 rounded-2xl font-bold text-sm overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 group-hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute inset-0 transition-transform duration-500 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 group-hover:scale-110" />
                   <span className="relative flex items-center gap-2 text-white">
                     <SparklesIcon className="w-4 h-4" />
                     Login / Register
@@ -263,31 +232,18 @@ const Navbar = ({ newsletterRef }) => {
                 </motion.button>
               )}
 
-              {/* MOBILE MENU TOGGLE */}
               <motion.button
                 whileTap={{ scale: 0.92 }}
                 onClick={() => setOpen(prev => !prev)}
-                className="lg:hidden relative p-4 rounded-2xl bg-white/10 dark:bg-cyan-900/30 backdrop-blur-xl border border-cyan-500/50 hover:border-cyan-400 shadow-2xl transition-all duration-300 z-[9999] flex items-center justify-center"
+                className="lg:hidden relative p-4 rounded-2xl bg-gray-100 dark:bg-gray-800 backdrop-blur-xl border border-gray-300 dark:border-gray-600 hover:border-cyan-400 shadow-2xl transition-all duration-300 z-[9999]"
               >
                 <AnimatePresence mode="wait">
                   {open ? (
-                    <motion.div
-                      key="close"
-                      initial={{ scale: 0, rotate: -90, opacity: 0 }}
-                      animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                      exit={{ scale: 0, rotate: 90, opacity: 0 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                    >
+                    <motion.div key="close" initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0, rotate: 90 }}>
                       <XIcon className="w-6 h-6 text-cyan-400" strokeWidth={3} />
                     </motion.div>
                   ) : (
-                    <motion.div
-                      key="menu"
-                      initial={{ scale: 0, rotate: 90, opacity: 0 }}
-                      animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                      exit={{ scale: 0, rotate: -90, opacity: 0 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                    >
+                    <motion.div key="menu" initial={{ scale: 0, rotate: 90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0, rotate: -90 }}>
                       <MenuIcon className="w-6 h-6 text-cyan-400" strokeWidth={3} />
                     </motion.div>
                   )}
@@ -298,40 +254,31 @@ const Navbar = ({ newsletterRef }) => {
         </div>
       </motion.header>
 
-      {/* MOBILE MENU */}
       <AnimatePresence>
         {open && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 z-40 bg-black/30 dark:bg-black/60 backdrop-blur-sm lg:hidden"
             />
 
-            {/* Sidebar */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 w-full max-w-md bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 z-50 shadow-2xl border-l border-cyan-500/20 overflow-y-auto"
+              className="fixed inset-y-0 right-0 z-50 w-full max-w-md overflow-y-auto bg-white border-l border-gray-200 shadow-2xl dark:bg-gray-900 dark:border-gray-700"
             >
-              {/* Close Button */}
-              <div className="absolute top-4 right-4 z-50">
-                <motion.button
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setOpen(false)}
-                  className="p-3 rounded-2xl bg-white/10 dark:bg-cyan-900/30 backdrop-blur-xl border border-cyan-500/50 hover:border-cyan-400 shadow-2xl transition-all duration-300"
-                >
+              <div className="absolute z-50 top-4 right-4">
+                <motion.button whileTap={{ scale: 0.9 }} onClick={() => setOpen(false)} className="p-3 bg-gray-100 border border-gray-300 shadow-2xl rounded-2xl dark:bg-gray-800 dark:border-gray-600 hover:border-cyan-400">
                   <XIcon className="w-6 h-6 text-cyan-400" strokeWidth={3} />
                 </motion.button>
               </div>
 
               <div className="p-8 pt-24 space-y-6">
-                {/* Navigation Items */}
                 {[...mainNavItems, ...(user ? userMenuItems : [])].map((item, i) => {
                   const Icon = item.icon;
                   const isActive = item.path && location.pathname === item.path;
@@ -345,101 +292,63 @@ const Navbar = ({ newsletterRef }) => {
                         item.onClick ? item.onClick() : navigate(item.path);
                         setOpen(false);
                       }}
-                      className={`p-5 rounded-2xl cursor-pointer transition-all ${
+                      className={`p-5 rounded-2xl cursor-pointer transition-all flex items-center gap-4 text-lg font-semibold ${
                         isActive
                           ? "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-400/40 text-cyan-400"
-                          : "hover:bg-gray-100 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300"
+                          : "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100"
                       }`}
                     >
-                      <div className="flex items-center gap-4 text-lg font-semibold">
-                        <Icon className="w-6 h-6" />
-                        {item.name}
-                      </div>
+                      {Icon && <Icon className="w-6 h-6" />}
+                      {item.name}
                     </motion.div>
                   );
                 })}
 
-               
-                <div className="pt-8 mt-8 border-t border-cyan-500/20 space-y-6">
-                  
-          
-                  {user && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className="flex flex-col items-center gap-6"
-                    >
-                      <div className="relative">
-                        <img
-                          src={user.photoURL || "/default-avatar.png"}
-                          alt="User"
-                          className="w-24 h-24 rounded-full ring-4 ring-cyan-400/60 object-cover shadow-2xl"
-                        />
-                        <div className="absolute bottom-0 right-0 w-6 h-6 bg-emerald-400 rounded-full border-4 border-white dark:border-slate-900 animate-pulse" />
-                      </div>
-                      
-                      {/* User Info */}
-                      <div className="text-center">
-                        <h3 className="text-xl font-bold text-gray-800 dark:text-white">
-                          {user.displayName || "User"}
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
-                          {user.email}
-                        </p>
-                      </div>
+                <div className="pt-8 mt-8 space-y-8 border-t border-gray-200 dark:border-gray-700">
+                  <div className="flex justify-center">
+                    <label className="swap swap-rotate">
+                      <input
+                        type="checkbox"
+                        className="theme-controller"
+                        checked={theme === "dark"}
+                        onChange={toggleTheme}
+                      />
+                      <SunIcon className="w-8 h-8 text-yellow-500 swap-on" />
+                      <MoonIcon className="w-8 h-8 text-blue-600 swap-off" />
+                    </label>
+                  </div>
 
-                      {/* Logout Button */}
+                  {user ? (
+                    <motion.div className="flex flex-col items-center gap-6 text-center">
+                      <div className="relative">
+                        <img src={user.photoURL || "/default-avatar.png"} alt="User" className="object-cover w-24 h-24 rounded-full shadow-2xl ring-4 ring-cyan-400/60" />
+                        <div className="absolute bottom-0 right-0 w-6 h-6 border-4 border-white rounded-full bg-emerald-400 dark:border-gray-900 animate-pulse" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">{user.displayName || "User"}</h3>
+                        <p className="text-sm text-gray-600 opacity-70 dark:text-gray-400">{user.email}</p>
+                      </div>
                       <motion.button
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={handleLogout}
-                        className="group relative w-full py-4 rounded-2xl font-bold text-lg overflow-hidden transition-all duration-500 flex items-center justify-center gap-3 border border-rose-500/30 bg-rose-500/10"
+                        className="flex items-center justify-center w-full gap-3 py-4 font-bold border rounded-2xl bg-rose-500/10 border-rose-500/30 text-rose-400"
                       >
-                        <div className="absolute inset-0 bg-gradient-to-r from-rose-600/20 to-red-700/20 blur-xl scale-0 group-hover:scale-150 transition-transform duration-700" />
-                        <div className="relative flex items-center gap-3">
-                          <LogOutIcon className="w-6 h-6 text-rose-400 group-hover:text-rose-300 transition-colors" />
-                          <span className="bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text text-transparent">
-                            LOGOUT
-                          </span>
-                        </div>
+                        <LogOutIcon className="w-6 h-6" />
+                        LOGOUT
                       </motion.button>
                     </motion.div>
-                  )}
-
-                
-                  {!user && (
+                  ) : (
                     <motion.button
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
                       onClick={() => { navigate("/auth/login"); setOpen(false); }}
-                      className="w-full py-4 rounded-2xl font-bold text-lg bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white shadow-2xl flex items-center justify-center gap-3"
+                      className="flex items-center justify-center w-full gap-3 py-4 font-bold text-white rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600"
                     >
                       <SparklesIcon className="w-6 h-6" />
                       LOGIN / REGISTER
                     </motion.button>
                   )}
-
-                  {/* Theme Toggle */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="flex justify-center"
-                  >
-                    <motion.button
-                      whileHover={{ scale: 1.1, rotate: 180 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={handleThemeToggle}
-                      className="p-4 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 shadow-lg"
-                    >
-                      {theme === "light" ? (
-                        <MoonIcon className="w-6 h-6 text-cyan-400" />
-                      ) : (
-                        <SunIcon className="w-6 h-6 text-yellow-400" />
-                      )}
-                    </motion.button>
-                  </motion.div>
                 </div>
               </div>
             </motion.div>

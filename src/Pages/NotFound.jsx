@@ -10,13 +10,13 @@ const NotFound = () => {
   const handleGoBack = () => navigate(-1);
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950 px-4">
+    <div className="relative flex items-center justify-center min-h-screen px-4 overflow-hidden bg-gradient-to-br from-base-200 dark:from-base-200 via-base-100 dark:via-base-100 to-base-200 dark:to-base-200">
       {/* Animated Particle Background */}
       <div className="absolute inset-0">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full opacity-60"
+            className="absolute w-1 h-1 rounded-full bg-cyan-400 opacity-60"
             initial={{
               x: Math.random() * window.innerWidth,
               y: Math.random() * window.innerHeight,
@@ -36,8 +36,8 @@ const NotFound = () => {
 
       {/* Neon Glow Orbs */}
       <div className="absolute inset-0 opacity-40">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-cyan-600 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-32 right-20 w-80 h-80 bg-blue-700 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute rounded-full top-20 left-10 w-96 h-96 bg-cyan-600 blur-3xl animate-pulse"></div>
+        <div className="absolute delay-1000 bg-blue-700 rounded-full bottom-32 right-20 w-80 h-80 blur-3xl animate-pulse"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-cyan-500/20 to-transparent rounded-full blur-3xl animate-ping"></div>
       </div>
 
@@ -46,7 +46,7 @@ const NotFound = () => {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-5xl pt-24 pb-16 sm:pt-32 md:pt-20"
+        className="relative z-10 flex flex-col items-center justify-center w-full max-w-5xl pt-24 pb-16 text-center sm:pt-32 md:pt-20"
       >
      
         <motion.div
@@ -55,9 +55,9 @@ const NotFound = () => {
           className="mb-8 perspective-1000"
           style={{ transformStyle: "preserve-3d" }}
         >
-          <div className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 rounded-3xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-2xl shadow-cyan-500/70 group">
-            <FaCar className="text-7xl sm:text-9xl md:text-[10rem] text-white drop-shadow-2xl group-hover:drop-shadow-[0_0_50px_rgba(34,211,238,0.9)] transition-all duration-500" />
-            <div className="absolute inset-0 rounded-3xl bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div className="relative flex items-center justify-center w-40 h-40 shadow-2xl sm:w-56 sm:h-56 md:w-72 md:h-72 rounded-3xl bg-gradient-to-br from-cyan-400 to-blue-600 shadow-cyan-500/70 group">
+            <FaCar className="text-7xl sm:text-9xl md:text-[10rem] text-base-content drop-shadow-2xl group-hover:drop-shadow-[0_0_50px_rgba(34,211,238,0.9)] transition-all duration-500" />
+            <div className="absolute inset-0 transition-opacity duration-500 opacity-0 rounded-3xl bg-base-content/60 dark:bg-base-content/60 backdrop-blur-3xl group-hover:opacity-100"></div>
           </div>
         </motion.div>
 
@@ -76,7 +76,7 @@ const NotFound = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-4 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-600 dark:text-gray-300"
+          className="mt-4 text-2xl font-bold sm:text-3xl md:text-4xl text-base-content/60 dark:text-base-content/60"
         >
           ROUTE NOT FOUND
         </motion.p>
@@ -86,10 +86,10 @@ const NotFound = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="max-w-2xl mx-auto mt-6 text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed px-4"
+          className="max-w-2xl px-4 mx-auto mt-6 text-base leading-relaxed sm:text-lg md:text-xl text-base-content/60 dark:text-base-content/60"
         >
           Looks like this road leads to nowhere. <br className="sm:hidden" />
-          <span className="text-cyan-400 font-bold">
+          <span className="font-bold text-cyan-400">
             Shift back to the highway
           </span>{" "}
           and continue your premium EV journey.
@@ -100,21 +100,21 @@ const NotFound = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
-          className="flex flex-col sm:flex-row gap-5 mt-10 w-full sm:w-auto px-6 sm:px-0"
+          className="flex flex-col w-full gap-5 px-6 mt-10 sm:flex-row sm:w-auto sm:px-0"
         >
           <button
             onClick={handleGoBack}
-            className="group flex items-center justify-center gap-3 w-full px-10 py-5 bg-gray-100/10 dark:bg-white/10 backdrop-blur-3xl border border-gray-300/20 dark:border-white/20 rounded-2xl font-bold text-lg shadow-2xl hover:bg-gray-100/20 dark:hover:bg-white/20 hover:border-cyan-400/50 hover:shadow-cyan-500/60 transition-all duration-500 hover:scale-105"
+            className="flex items-center justify-center w-full gap-3 px-10 py-5 text-lg font-bold transition-all duration-500 border shadow-2xl group bg-base-content/60 dark:bg-base-content/60 backdrop-blur-3xl border-base-content/60 dark:border-base-content/60 rounded-2xl hover:bg-base-content/60 dark:hover:bg-base-content/60 hover:border-cyan-400/50 hover:shadow-cyan-500/60 hover:scale-105"
           >
-            <FaArrowLeft className="text-cyan-400 group-hover:-translate-x-1 transition" />
+            <FaArrowLeft className="transition text-cyan-400 group-hover:-translate-x-1" />
             Go Back
           </button>
 
           <button
             onClick={handleGoHome}
-            className="group flex items-center justify-center gap-3 w-full px-12 py-5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl font-bold text-lg shadow-2xl shadow-cyan-500/70 hover:shadow-cyan-500/90 hover:scale-105 transition-all duration-500"
+            className="flex items-center justify-center w-full gap-3 px-12 py-5 text-lg font-bold transition-all duration-500 shadow-2xl group bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl shadow-cyan-500/70 hover:shadow-cyan-500/90 hover:scale-105"
           >
-            <FaHome className="text-white group-hover:scale-110 transition" />
+            <FaHome className="transition text-base-content group-hover:scale-110" />
             Back to Home
           </button>
         </motion.div>
@@ -124,7 +124,7 @@ const NotFound = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="mt-12 text-sm sm:text-base text-gray-500 animate-pulse px-4"
+          className="px-4 mt-12 text-sm sm:text-base text-base-content/60 animate-pulse"
         >
           🚗 Even supercars take wrong turns sometimes. Let's get you back on track! ⚡
         </motion.p>

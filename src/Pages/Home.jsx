@@ -11,7 +11,7 @@ const Home = () => {
   const newsletterRef = useRef(null);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-black">
+    <div className="relative min-h-screen overflow-hidden bg-base-100 dark:bg-base-content">
       {/* Navbar */}
       <Navbar newsletterRef={newsletterRef} />
 
@@ -48,10 +48,10 @@ const Home = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="max-w-4xl mx-auto"
           >
-            <h2 className="text-4xl font-black leading-tight text-transparent sm:text-5xl lg:text-6xl bg-clip-text bg-gradient-to-r from-black dark:from-cyan-400 via-blue-500 to-black dark:to-cyan-400">
+            <h2 className="text-4xl font-black leading-tight text-transparent sm:text-5xl lg:text-6xl bg-clip-text bg-gradient-to-r from-base-content dark:from-base-content via-blue-500 to-base-content dark:to-base-content">
               Experience the Future of Driving
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-gray-600 sm:text-xl dark:text-gray-300">
+            <p className="mt-6 text-lg leading-relaxed text-base-content/60 sm:text-xl dark:text-base-content/60">
               Import & Export Premium EVs Globally –{" "}
               <span className="font-bold text-cyan-400">Seamless, Secure, Swift</span>
             </p>

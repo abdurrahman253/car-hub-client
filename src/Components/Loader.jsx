@@ -1,13 +1,13 @@
 import React from "react";
-import { FaCar } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { FaCar } from "react-icons/fa";
 
 const Loader = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 dark:from-slate-950 via-white dark:via-black to-gray-100 dark:to-slate-950 z-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-base-200 dark:from-base-200 via-base-100 dark:via-base-100 to-base-200 dark:to-base-200">
       {/* Glow Orbs */}
-      <div className="absolute inset-0 opacity-50">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-cyan-600/30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute inset-0">
+        <div className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 w-80 h-80 bg-cyan-400/30 blur-3xl animate-pulse"></div>
       </div>
 
       {/* Main Spinner */}
@@ -24,12 +24,12 @@ const Loader = () => {
           className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-8 border-cyan-500/30 shadow-[0_0_25px_rgba(34,211,238,0.5)] flex items-center justify-center"
         >
           {/* Inner Circle */}
-          <div className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-inner shadow-black/40">
-            <FaCar className="text-5xl text-white drop-shadow-2xl" />
+          <div className="absolute flex items-center justify-center rounded-full shadow-inner inset-4 bg-gradient-to-br from-cyan-500 to-blue-600 shadow-base-content/40">
+            <FaCar className="text-5xl text-base-content drop-shadow-2xl" />
           </div>
           {/* Glow Pulse */}
           <motion.div
-            className="absolute inset-6 rounded-full bg-cyan-400/40 blur-xl"
+            className="absolute rounded-full inset-6 bg-cyan-400/40 blur-xl"
             animate={{ scale: [1, 1.3, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           />

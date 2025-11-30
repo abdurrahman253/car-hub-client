@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Product from "./Product";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -40,14 +40,14 @@ const LatestProducts = () => {
   // Loading State
   if (loading) {
     return (
-      <section className="container mx-auto px-6 py-20">
-        <div className="text-center mb-16">
-          <div className="h-8 bg-cyan-400/20 rounded w-48 mx-auto animate-pulse"></div>
-          <div className="h-12 bg-gray-100/10 dark:bg-white/10 rounded w-96 mx-auto mt-4 animate-pulse"></div>
+      <section className="container px-6 py-20 mx-auto">
+        <div className="mb-16 text-center">
+          <div className="w-48 h-8 mx-auto rounded bg-cyan-400/20 animate-pulse"></div>
+          <div className="h-12 mx-auto mt-4 rounded bg-base-content/60 dark:bg-base-content/60 w-96 animate-pulse"></div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-gray-200 dark:bg-slate-800/50 backdrop-blur-xl rounded-3xl h-96 animate-pulse" />
+            <div key={i} className="bg-base-content/60 dark:bg-base-content/60 backdrop-blur-xl rounded-3xl h-96 animate-pulse" />
           ))}
         </div>
       </section>
@@ -57,17 +57,17 @@ const LatestProducts = () => {
   // Error State
   if (error) {
     return (
-      <section className="container mx-auto px-6 py-20 text-center">
+      <section className="container px-6 py-20 mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-md mx-auto"
         >
-          <h3 className="text-2xl font-bold text-red-400 mb-4">Failed to Load Products</h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
+          <h3 className="mb-4 text-2xl font-bold text-red-400">Failed to Load Products</h3>
+          <p className="mb-6 text-base-content/60 dark:text-base-content/60">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="bg-gradient-to-r from-red-600 to-orange-600 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transform hover:scale-105 transition"
+            className="px-6 py-3 font-bold transition transform rounded-full bg-gradient-to-r from-red-600 to-orange-600 text-base-content hover:shadow-lg hover:scale-105"
           >
             Try Again
           </button>
@@ -79,42 +79,42 @@ const LatestProducts = () => {
   // Empty State
   if (products.length === 0) {
     return (
-      <section className="container mx-auto px-6 py-20 text-center">
+      <section className="container px-6 py-20 mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           className="max-w-md mx-auto"
         >
-          <h3 className="text-3xl font-bold text-cyan-400 mb-4">No Products Available</h3>
-          <p className="text-gray-600 dark:text-gray-400">Check back later for fresh arrivals!</p>
+          <h3 className="mb-4 text-3xl font-bold text-cyan-400">No Products Available</h3>
+          <p className="text-base-content/60 dark:text-base-content/60">Check back later for fresh arrivals!</p>
         </motion.div>
       </section>
     );
   }
 
   return (
-    <section className="container mx-auto px-6 py-20">
+    <section className="container px-6 py-20 mx-auto">
       {/* Section Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className="text-center mb-16"
+        className="mb-16 text-center"
       >
-        <p className="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-2">
+        <p className="mb-2 text-sm font-bold tracking-widest uppercase text-cyan-400">
           Fresh Arrivals
         </p>
-        <h2 className="text-3xl sm:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black dark:from-white via-cyan-300 to-black dark:to-white">
+        <h2 className="text-3xl font-black text-transparent sm:text-6xl lg:text-7xl bg-clip-text bg-gradient-to-r from-base-content dark:from-base-content via-cyan-300 to-base-content dark:to-base-content">
           Latest Premium EVs
         </h2>
-        <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
+        <p className="max-w-2xl mx-auto mt-4 text-lg text-base-content/60 dark:text-base-content/60">
           Handpicked from Japan, Germany, USA – ready for global delivery
         </p>
       </motion.div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-3 max-w-7xl">
         {products.map((product, index) => (
           <motion.div
             key={product._id}
@@ -129,10 +129,10 @@ const LatestProducts = () => {
       </div>
 
       {/* View All Button */}
-      <div className="text-center mt-12">
+      <div className="mt-12 text-center">
         <Link
           to="/inventory"
-          className="inline-flex items-center gap-3 bg-gray-100/10 dark:bg-white/10 backdrop-blur-xl border border-cyan-500/30 text-cyan-400 font-bold px-8 py-4 rounded-full hover:bg-cyan-500/20 hover:border-cyan-400 transition-all duration-300"
+          className="inline-flex items-center gap-3 px-8 py-4 font-bold transition-all duration-300 border rounded-full bg-base-content/60 dark:bg-base-content/60 backdrop-blur-xl border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 hover:border-cyan-400"
         >
           View All Inventory
         </Link>
