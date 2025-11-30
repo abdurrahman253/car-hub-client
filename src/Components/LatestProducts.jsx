@@ -17,7 +17,6 @@ const LatestProducts = () => {
       .then((response) => {
         console.log("Latest Products Response:", response);
         
-      
         if (response.success && Array.isArray(response.data)) {
           // Get latest 6 products
           const latest = response.data.slice(0, 6);
@@ -43,11 +42,11 @@ const LatestProducts = () => {
       <section className="container px-6 py-20 mx-auto">
         <div className="mb-16 text-center">
           <div className="w-48 h-8 mx-auto rounded bg-cyan-400/20 animate-pulse"></div>
-          <div className="h-12 mx-auto mt-4 rounded bg-base-content/60 dark:bg-base-content/60 w-96 animate-pulse"></div>
+          <div className="h-12 mx-auto mt-4 rounded bg-gray-300 dark:bg-gray-700 w-96 animate-pulse"></div>
         </div>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-base-content/60 dark:bg-base-content/60 backdrop-blur-xl rounded-3xl h-96 animate-pulse" />
+            <div key={i} className="bg-gray-200 dark:bg-gray-800 backdrop-blur-xl rounded-3xl h-96 animate-pulse" />
           ))}
         </div>
       </section>
@@ -64,10 +63,10 @@ const LatestProducts = () => {
           className="max-w-md mx-auto"
         >
           <h3 className="mb-4 text-2xl font-bold text-red-400">Failed to Load Products</h3>
-          <p className="mb-6 text-base-content/60 dark:text-base-content/60">{error}</p>
+          <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 font-bold transition transform rounded-full bg-gradient-to-r from-red-600 to-orange-600 text-base-content hover:shadow-lg hover:scale-105"
+            className="px-6 py-3 font-bold transition transform rounded-full bg-gradient-to-r from-red-600 to-orange-600 text-white hover:shadow-lg hover:scale-105"
           >
             Try Again
           </button>
@@ -86,7 +85,7 @@ const LatestProducts = () => {
           className="max-w-md mx-auto"
         >
           <h3 className="mb-4 text-3xl font-bold text-cyan-400">No Products Available</h3>
-          <p className="text-base-content/60 dark:text-base-content/60">Check back later for fresh arrivals!</p>
+          <p className="text-gray-600 dark:text-gray-400">Check back later for fresh arrivals!</p>
         </motion.div>
       </section>
     );
@@ -105,10 +104,10 @@ const LatestProducts = () => {
         <p className="mb-2 text-sm font-bold tracking-widest uppercase text-cyan-400">
           Fresh Arrivals
         </p>
-        <h2 className="text-3xl font-black text-transparent sm:text-6xl lg:text-7xl bg-clip-text bg-gradient-to-r from-base-content dark:from-base-content via-cyan-300 to-base-content dark:to-base-content">
+        <h2 className="text-3xl font-black text-transparent sm:text-6xl lg:text-7xl bg-clip-text bg-gradient-to-r from-gray-900 dark:from-white via-cyan-400 to-gray-900 dark:to-white">
           Latest Premium EVs
         </h2>
-        <p className="max-w-2xl mx-auto mt-4 text-lg text-base-content/60 dark:text-base-content/60">
+        <p className="max-w-2xl mx-auto mt-4 text-lg text-gray-600 dark:text-gray-400">
           Handpicked from Japan, Germany, USA – ready for global delivery
         </p>
       </motion.div>
@@ -131,8 +130,8 @@ const LatestProducts = () => {
       {/* View All Button */}
       <div className="mt-12 text-center">
         <Link
-          to="/inventory"
-          className="inline-flex items-center gap-3 px-8 py-4 font-bold transition-all duration-300 border rounded-full bg-base-content/60 dark:bg-base-content/60 backdrop-blur-xl border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 hover:border-cyan-400"
+          to="/all-products"
+          className="inline-flex items-center gap-3 px-8 py-4 font-bold transition-all duration-300 border rounded-full bg-white/80 dark:bg-gray-800/60 backdrop-blur-xl border-cyan-500/30 text-cyan-500 dark:text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400 shadow-lg hover:shadow-cyan-500/30"
         >
           View All Inventory
         </Link>
